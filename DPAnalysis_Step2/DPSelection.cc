@@ -182,7 +182,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    Float_t EfficiencyScaleFactors;
    Float_t PUScaleFactors;
 
-
    TTree *anaTree     = new TTree("anaTree","Tree of variables"); 
    anaTree->Branch("nPhot", &nPhot, "nPhot/I");
    anaTree->Branch("nMuon", &nMuon, "nMuon/I");
@@ -191,7 +190,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    anaTree->Branch("nGoodVtx", &nGoodVtx, "nGoodVtx/I");
    anaTree->Branch("isMC", &isMC, "isMC/I");
    anaTree->Branch("ptPhot", &ptPhot);
-   anaTree->Branch("ptPhotUp" &ptPhotUp);
+   anaTree->Branch("ptPhotUp", &ptPhotUp);
    anaTree->Branch("ptPhotDown", &ptPhotDown);
    anaTree->Branch("etaPhot", &etaPhot);
    anaTree->Branch("phiPhot", &phiPhot);
@@ -277,6 +276,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
      ptPhot.clear();
+     ptPhotUp.clear();
+     ptPhotDown.clear();
      ptJet.clear();
      ptJetUp.clear();
      ptJetDown.clear();
@@ -357,16 +358,17 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 			 
 
        TLorentzVector phoP4( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
+       TLorentzVector phoP4up( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
+       TLorentzVector phoP4down( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
 
-       int systType = 1;
-
-       double egScale = 1. ;
+       double egScaleup = 1.;
+       double egScaledown  = 1.;
        
-       if ( systType == 0 ) egScale = 1.;
-       if ( systType == 1 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
-       if ( systType == 2 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
+       egScaleup = ( fabs(phoP4up.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
+       egScaledown = ( fabs(phoP4down.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
 
-       phoP4 = phoP4 * egScale;
+       phoP4up = phoP4up * egScaleup;
+       phoP4down = phoP4down * egScaledown;
        
        if ( fabs(fSpike[i]) > 0.001 ) continue ;
        if ( phoP4.Pt() < 50. )  continue ;
@@ -404,6 +406,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        
        ptPhot.push_back(phoP4.Pt());
+       ptPhotUp.push_back(phoP4.Pt());
+       ptPhotDown.push_back(phoP4.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
@@ -432,22 +436,40 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        
        TLorentzVector jp4( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
+       TLorentzVector jp4up( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
+       TLorentzVector jp4down( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
 
+       double jCorr;
 
+       jCorr = ( 1. + jecUnc[j] ) ;
+       jp4up = jp4up*jCorr;
+       
+       jCorr = ( 1. - jecUnc[j] ) ;
+       jp4down = jp4down*jCorr;
 
-       if (jp4.Pt() < 30) continue;
-       if ( fabs(jp4.Eta()) > 2.4 ) continue ;
+       bool jetpt = true;
+       bool jetptup = true;
+       bool jetptdown = true;
+
+       if ( jp4.Pt() < 30) jetpt == false;
+       if ( jp4up.Pt() < 30) jetptup == false;
+       if ( jp4down.Pt() < 30) jetptdown == false;
+
+       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
+       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
+       if ( fabs(jp4down.Eta()) > 2.4 ) jetptdown == false ;
        
        if ( jetNDau[j] < (double)   2 )  continue ;
        if ( jetCEF[j] >= (double)0.99 )  continue ;
        if ( jetNEF[j] >= (double)0.99 )  continue ;
        if ( jetNHF[j] >= (double)0.99 )  continue ;
-       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) continue ;
+       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetpt == false ;
+       if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
+       if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
        
-       double dR_gj = 999. ;
+      
+       // double dR_gj = 999. 
        
-       
-       // for ( int k=0 ; k< nPhotons; k++ ) {
        // 	 TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] ) ;
 	 
        // 	 if ( phoP4.Pt() < 50. )   continue ;
@@ -476,7 +498,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        // //if ( dR_gj < 0.3 ) continue ;       
 
 
-       ptJet.push_back(jp4.Pt());
+       if ( jetpt ) ptJet.push_back(jp4.Pt());
+       if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
+       if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
        sort(ptJet.begin(),ptJet.end(),comp_pair);
      }
 
