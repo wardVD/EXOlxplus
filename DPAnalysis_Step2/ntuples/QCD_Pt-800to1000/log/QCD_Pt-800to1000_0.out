@@ -1,0 +1,73 @@
+Sender: LSF System <lsfadmin@b6767fd779.cern.ch>
+Subject: Job 570557450: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-800to1000 QCD_Pt-800to1000> in cluster batch Done
+
+Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-800to1000 QCD_Pt-800to1000> was submitted from host <lxplus0157.cern.ch> by user <wvandrie> in cluster <batch>.
+Job was executed on host(s) <b6767fd779.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
+</afs/cern.ch/user/w/wvandrie> was used as the home directory.
+</afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
+Started at Thu Oct  2 16:56:52 2014
+Results reported at Thu Oct  2 17:00:38 2014
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` 
+./tmp/main list/QCD_Pt-800to1000 QCD_Pt-800to1000;
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     15.90 sec.
+    Max Memory :       115 MB
+    Max Swap   :       697 MB
+
+    Max Processes  :         6
+    Max Threads    :         7
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/wvandrie/570557450> on <>
+
+Reading list : list/QCD_Pt-800to1000 .......
+Adding following files to the chain
+	/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v21/QCD_Pt-800to1000.root
+Number of files: 1
+Building DPSelection...
+Processing event 10000
+Processing event 20000
+Processing event 30000
+Processing event 40000
+Processing event 50000
+Processing event 60000
+Processing event 70000
+Processing event 80000
+Processing event 90000
+Processing event 100000
+Processing event 110000
+Processing event 120000
+Processing event 130000
+Processing event 140000
+Processing event 150000
+Processing event 160000
+Processing event 170000
+Processing event 180000
+Processing event 190000
+Processing event 200000
+Processing event 210000
+Processing event 220000
+
+Job finished at Don Okt  2 17:00:35 CEST 2014 on node 
+ under linux version Scientific Linux CERN SLC release 6.5 (Carbon)
+
+CERN statistics: This process used approximately : 0:00:21 KSI2K hours (21 KSI2K seconds)
+                 This process corresponds to     : 0:01:22 HS06  hours (82 HS06  seconds)
+
+
+PS:
+
+Read file </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2/ntuples/QCD_Pt-800to1000/log/QCD_Pt-800to1000_0.stderr> for stderr output of this job.
+

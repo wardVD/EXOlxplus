@@ -1,0 +1,2 @@
+cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` 
+./tmp/main list/G_Pt-300to470 G_Pt-300to470;

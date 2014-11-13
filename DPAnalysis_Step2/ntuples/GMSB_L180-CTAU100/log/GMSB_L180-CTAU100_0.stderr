@@ -1,0 +1,40 @@
+Error in <TFile::TFile>: file /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v21/GMSB_L180-CTAU100.root does not exist
+
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+#0  0x00002b6de51415de in waitpid () from /lib64/libc.so.6
+#1  0x00002b6de50d3619 in do_system () from /lib64/libc.so.6
+#2  0x00002b6de11c31bf in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc481/cms/cmssw/CMSSW_7_1_8/external/slc6_amd64_gcc481/lib/libCore.so
+#3  0x00002b6de11c4d2c in TUnixSystem::DispatchSignals(ESignals) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc481/cms/cmssw/CMSSW_7_1_8/external/slc6_amd64_gcc481/lib/libCore.so
+#4  <signal handler called>
+#5  getsumcounterzero (infile=<incomplete type>) at DPSelection.cc:123
+#6  0x00000000004082c1 in DPSelection::Loop (this=this
+entry=0x7fff09304790, nMaxEvents=nMaxEvents
+entry=1000000000, outname=outname
+entry=0x7fff093040a0 "GMSB_L180-CTAU100") at DPSelection.cc:158
+#7  0x00000000004035d2 in main (argc=<optimized out>, argv=<optimized out>) at main.cc:82
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#5  getsumcounterzero (infile=<incomplete type>) at DPSelection.cc:123
+#6  0x00000000004082c1 in DPSelection::Loop (this=this
+entry=0x7fff09304790, nMaxEvents=nMaxEvents
+entry=1000000000, outname=outname
+entry=0x7fff093040a0 "GMSB_L180-CTAU100") at DPSelection.cc:158
+#7  0x00000000004035d2 in main (argc=<optimized out>, argv=<optimized out>) at main.cc:82
+===========================================================
+
+
+/pool/spool/1412261801.570557487.shell: line 2: 143469 Segmentation fault      (core dumped) ./tmp/main list/GMSB_L180-CTAU100 GMSB_L180-CTAU100

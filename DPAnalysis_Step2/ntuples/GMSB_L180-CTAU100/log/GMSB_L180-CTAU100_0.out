@@ -1,0 +1,51 @@
+Sender: LSF System <lsfadmin@p05614910f69219.cern.ch>
+Subject: Job 570557487: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L180-CTAU100 GMSB_L180-CTAU100> in cluster batch Exited
+
+Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L180-CTAU100 GMSB_L180-CTAU100> was submitted from host <lxplus0157.cern.ch> by user <wvandrie> in cluster <batch>.
+Job was executed on host(s) <p05614910f69219.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
+</afs/cern.ch/user/w/wvandrie> was used as the home directory.
+</afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
+Started at Thu Oct  2 16:56:52 2014
+Results reported at Thu Oct  2 16:57:46 2014
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` 
+./tmp/main list/GMSB_L180-CTAU100 GMSB_L180-CTAU100;
+------------------------------------------------------------
+
+Exited with exit code 255.
+
+Resource usage summary:
+
+    CPU time   :      2.96 sec.
+    Max Memory :        65 MB
+    Max Swap   :      1063 MB
+
+    Max Processes  :        11
+    Max Threads    :        12
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/wvandrie/570557487> on <>
+
+Reading list : list/GMSB_L180-CTAU100 .......
+Adding following files to the chain
+	/localgrid/wvandrie/CMSSW_5_3_11_patch4_2/src/EXO/DPAnalysis/test/v13/GMSB_L180-CTAU100.root 
+Number of files: 1
+Building DPSelection...
+
+Job finished at Don Okt  2 16:57:46 CEST 2014 on node 
+ under linux version Scientific Linux CERN SLC release 6.5 (Carbon)
+
+CERN statistics: This process used approximately : 0:00:09 KSI2K hours (9 KSI2K seconds)
+                 This process corresponds to     : 0:00:38 HS06  hours (38 HS06  seconds)
+
+
+PS:
+
+Read file </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2/ntuples/GMSB_L180-CTAU100/log/GMSB_L180-CTAU100_0.stderr> for stderr output of this job.
+
