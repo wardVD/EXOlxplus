@@ -29,8 +29,6 @@ using namespace std;
 using std::vector;
 using std::cout; using std::endl;
 
-testward1
-
 
 //===== constructor  ====
 DPSelection::DPSelection(TTree *tree): GMSBTree_V3(tree) { 
