@@ -346,7 +346,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        //if (!matching) continue;
        
-
        dzConv.push_back(convDz[i]);
        dxyConv.push_back(convDxy[i]);
        phiConv.push_back(convPhi[i]);
@@ -401,9 +400,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        */
 
        if (phoMatchedEle[i] > 0) continue;
-
-
-
        
        ptPhot.push_back(phoP4.Pt());
        ptPhotUp.push_back(phoP4.Pt());
