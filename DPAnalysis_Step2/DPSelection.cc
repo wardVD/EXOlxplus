@@ -497,6 +497,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
        if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
        sort(ptJet.begin(),ptJet.end(),comp_pair);
+       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
+       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
      }
 
      nPhot = ptPhot.size(); 
