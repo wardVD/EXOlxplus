@@ -24,8 +24,6 @@
 #define pi 3.141592653589793
 #include "DPSelection.h"
 
-test
-
 using namespace std;
 using std::vector;
 using std::cout; using std::endl;
