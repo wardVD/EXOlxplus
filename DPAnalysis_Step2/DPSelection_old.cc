@@ -361,10 +361,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        double egScaleup = 1.;
        double egScaledown  = 1.;
-
-       bool photpt = true;
-       bool photptup = true;
-       bool photptdown = true;
        
        egScaleup = ( fabs(phoP4up.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
        egScaledown = ( fabs(phoP4down.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
@@ -373,24 +369,16 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        phoP4down = phoP4down * egScaledown;
        
        if ( fabs(fSpike[i]) > 0.001 ) continue ;
-       if ( phoP4.Pt() < 50. )  photpt = false ;
-       if ( phoP4up.Pt() < 50. )  photptup = false ;
-       if ( phoP4down.Pt() < 50. )  photptdown = false ;
-       if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
-       if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ;
-       if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
+       if ( phoP4.Pt() < 50. )  continue ;
+       if ( fabs(phoP4.Eta()) > 1.47 )  continue ;
        if ( phoHoverE[i] > 0.05 ) continue ;
        //if ( sMinPho[i] < 0.15 || sMinPho[i] > 0.3 )  continue ; WAS WEG
        //if ( sMinPho[i] < 0.12 || sMinPho[i] > 0.38 )                continue ; WAS WEG
        if ( sigmaIeta[i] >  0.012 ) continue ;
        //if ( dR_TrkPho[i] < 0.6 ) continue; WAS WEG
-       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
-       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
-       if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
-
-       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) photpt = false ;
-       if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) photptup = false ;
-       if ( phoP4down.Eta() > 0.80 && phoP4down.Eta() < 0.95 && phoP4down.Phi() > -1.95 && phoP4down.Phi() < -1.8 ) photptdown = false ;
+       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
+       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ;
+       
        
        /***********************************************************************/
        //                   Cut for isolated photons  
@@ -398,12 +386,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        
                
        if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
+       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon
+       
 
        /***********************************************************************/
        //                   Cut for fake photons                                                                                                                                                          
@@ -415,12 +400,10 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        if (phoMatchedEle[i] > 0) continue;
        
-       if ( photpt ) ptPhot.push_back(phoP4.Pt());
-       if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
-       if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());
+       ptPhot.push_back(phoP4.Pt());
+       ptPhotUp.push_back(phoP4.Pt());
+       ptPhotDown.push_back(phoP4.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
-       sort(ptPhotup.begin(),ptPhotup.end(),comp_pair);
-       sort(ptPhotdown.begin(),ptPhotdown.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
        sMinPhot.push_back(sMinPho[i]);
