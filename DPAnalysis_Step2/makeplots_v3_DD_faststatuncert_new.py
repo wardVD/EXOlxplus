@@ -181,8 +181,8 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
 
 def function (lamb,ctau1,phot,statmet,statptphot):
 
-    #listsig1 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau1+"_new.root"]
-    listsig1 = ["./v21/Step1_SIG_new.root"]
+    listsig1 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau1+"_new.root"]
+    #listsig1 = ["./v21/Step1_SIG_new.root"]
 
     vecfilessig1 = []
     for item in listsig1:
@@ -220,7 +220,7 @@ def function (lamb,ctau1,phot,statmet,statptphot):
     vechissig1metdown = [dxysig1metdown]
     vechissig1metdown = loop(vecfilessig1, vechissig1metdown, 6, phot, statmet, statptphot)
 
-    output = TFile.Open("./ctau"+ctau1+"lambda"+lamb+"/output"+str(phot)+"MET"+str(statmet)+"PtPhot"+str(statptphot)+"_Step1_new.root","recreate")
+    output = TFile.Open("./ctau"+ctau1+"lambda"+lamb+"/output"+str(phot)+"MET"+str(statmet)+"PtPhot"+str(statptphot)+"_GMSB_new.root","recreate")
 
     for it in vechissig1:
         it.Write()
@@ -238,6 +238,19 @@ def function (lamb,ctau1,phot,statmet,statptphot):
         it.Write()
     output.Close()
 
+    jetup_perc = fabs(vechissig1[0].Integral() - vechissig1ptup[0].Integral())/max(vechissig1[0].Integral(),vechissig1ptup[0].Integral())
+    jetdown_perc = fabs(vechissig1[0].Integral() - vechissig1ptdown[0].Integral())/max(vechissig1[0].Integral(),vechissig1ptdown[0].Integral())
+    photup_perc = fabs(vechissig1[0].Integral() - vechissig1phoup[0].Integral())/max(vechissig1[0].Integral(),vechissig1phoup[0].Integral())
+    photdown_perc = fabs(vechissig1[0].Integral() - vechissig1phodown[0].Integral())/max(vechissig1[0].Integral(),vechissig1phodown[0].Integral())
+    metup_perc = fabs(vechissig1[0].Integral() - vechissig1metup[0].Integral())/max(vechissig1[0].Integral(),vechissig1metup[0].Integral())
+    metdown_perc = fabs(vechissig1[0].Integral() - vechissig1metdown[0].Integral())/max(vechissig1[0].Integral(),vechissig1metdown[0].Integral())
+
+    print "jetup: " + str(100*jetup_perc)
+    print "jetdown: " + str(100*jetdown_perc)
+    print "photup: " + str(100*photup_perc)
+    print "photdown: " + str(100*photdown_perc)
+    print "metup: " + str(100*metup_perc)
+    print "metdown: " + str(100*metdown_perc)
 
 def main():
     #function("180","10","500",1)
@@ -273,7 +286,7 @@ def main():
     # function("160","500","500",2,30,88)
 
     # function("160","250","500",2,27,85)
-    # function("160","250","500",2,30,85)
+  # function("160","250","500",2,30,85)
     # function("160","250","500",2,33,85)
     # function("160","250","500",2,30,82)
     # function("160","250","500",2,30,88)

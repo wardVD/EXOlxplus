@@ -253,7 +253,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
      if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
      else MC = 1;
 	
-     if (triggered != 1) continue;
+     if (triggered == 0 || triggered == 2) continue;
 
      int entries = getsumcounterzero(outname); 
 
