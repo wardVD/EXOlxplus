@@ -24,9 +24,12 @@
 #define pi 3.141592653589793
 #include "DPSelection.h"
 
+
 using namespace std;
 using std::vector;
 using std::cout; using std::endl;
+
+
 
 
 //===== constructor  ====
@@ -181,6 +184,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    Float_t EfficiencyScaleFactors;
    Float_t PUScaleFactors;
 
+
    TTree *anaTree     = new TTree("anaTree","Tree of variables"); 
    anaTree->Branch("nPhot", &nPhot, "nPhot/I");
    anaTree->Branch("nMuon", &nMuon, "nMuon/I");
@@ -275,8 +279,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
      ptPhot.clear();
-     ptPhotUp.clear();
-     ptPhotDown.clear();
      ptJet.clear();
      ptJetUp.clear();
      ptJetDown.clear();
@@ -345,6 +347,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        //if (!matching) continue;
        
+
        dzConv.push_back(convDz[i]);
        dxyConv.push_back(convDxy[i]);
        phiConv.push_back(convPhi[i]);
@@ -356,17 +359,16 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 			 
 
        TLorentzVector phoP4( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
-       TLorentzVector phoP4up( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
-       TLorentzVector phoP4down( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
 
-       double egScaleup = 1.;
-       double egScaledown  = 1.;
+       int systType = 1;
+
+       double egScale = 1. ;
        
-       egScaleup = ( fabs(phoP4up.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
-       egScaledown = ( fabs(phoP4down.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
+       if ( systType == 0 ) egScale = 1.;
+       if ( systType == 1 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
+       if ( systType == 2 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
 
-       phoP4up = phoP4up * egScaleup;
-       phoP4down = phoP4down * egScaledown;
+       phoP4 = phoP4 * egScale;
        
        if ( fabs(fSpike[i]) > 0.001 ) continue ;
        if ( phoP4.Pt() < 50. )  continue ;
@@ -399,10 +401,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        */
 
        if (phoMatchedEle[i] > 0) continue;
+
+
+
        
        ptPhot.push_back(phoP4.Pt());
-       ptPhotUp.push_back(phoP4.Pt());
-       ptPhotDown.push_back(phoP4.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
@@ -431,74 +434,21 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        
        TLorentzVector jp4( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
-       TLorentzVector jp4up( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
-       TLorentzVector jp4down( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
 
-       double jCorr;
 
-       jCorr = ( 1. + jecUnc[j] ) ;
-       jp4up = jp4up*jCorr;
-       
-       jCorr = ( 1. - jecUnc[j] ) ;
-       jp4down = jp4down*jCorr;
 
-       bool jetpt = true;
-       bool jetptup = true;
-       bool jetptdown = true;
-
-       if ( jp4.Pt() < 30) jetpt == false;
-       if ( jp4up.Pt() < 30) jetptup == false;
-       if ( jp4down.Pt() < 30) jetptdown == false;
-
-       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
-       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
-       if ( fabs(jp4down.Eta()) > 2.4 ) jetptdown == false ;
+       if (jp4.Pt() < 30) continue;
+       if ( fabs(jp4.Eta()) > 2.4 ) continue ;
        
        if ( jetNDau[j] < (double)   2 )  continue ;
        if ( jetCEF[j] >= (double)0.99 )  continue ;
        if ( jetNEF[j] >= (double)0.99 )  continue ;
        if ( jetNHF[j] >= (double)0.99 )  continue ;
-       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetpt == false ;
-       if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
-       if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
+       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) continue ;
        
-      
-       // double dR_gj = 999. 
-       
-       // 	 TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] ) ;
-	 
-       // 	 if ( phoP4.Pt() < 50. )   continue ;
-       // 	 if ( phoHoverE[j] > 0.05 ) continue ;
-	 
-       // 	 /***********************************************************************/
-       // 	 //                   Cut for isolated photons
-       // 	 /***********************************************************************/
-	 	 	 	 
-       // 	 if ( cHadIso[j] >= 2.6 ) continue ;  // chargedHadron
-       // 	 if ( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
-       // 	 if ( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon      
-	 
 
-       // 	 /***********************************************************************/
-       //   //                   Cut for fake photons
-       // 	 /***********************************************************************/
-
-	 
-       //   //if (!( cHadIso[j] >= 2.6 )  && (!( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-	 
-	 
-       // 	 //if ( phoP4.DeltaR( jp4 ) < dR_gj )  dR_gj  = phoP4.DeltaR( jp4 ) ; 
-       // }	     
-       
-       // //if ( dR_gj < 0.3 ) continue ;       
-
-
-       if ( jetpt ) ptJet.push_back(jp4.Pt());
-       if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
-       if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
+       ptJet.push_back(jp4.Pt());
        sort(ptJet.begin(),ptJet.end(),comp_pair);
-       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
-       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
      }
 
      nPhot = ptPhot.size(); 

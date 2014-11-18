@@ -419,8 +419,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
        if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
-       sort(ptPhotup.begin(),ptPhotup.end(),comp_pair);
-       sort(ptPhotdown.begin(),ptPhotdown.end(),comp_pair);
+       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
+       sort(ptPhotDown.begin(),ptPhotDown.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
        sMinPhot.push_back(sMinPho[i]);
@@ -478,38 +478,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetpt == false ;
        if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
        if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
-       
       
-       // double dR_gj = 999. 
-       
-       // 	 TLorentzVector phoP4( phoPx[k], phoPy[k], phoPz[k], phoE[k] ) ;
-	 
-       // 	 if ( phoP4.Pt() < 50. )   continue ;
-       // 	 if ( phoHoverE[j] > 0.05 ) continue ;
-	 
-       // 	 /***********************************************************************/
-       // 	 //                   Cut for isolated photons
-       // 	 /***********************************************************************/
-	 	 	 	 
-       // 	 if ( cHadIso[j] >= 2.6 ) continue ;  // chargedHadron
-       // 	 if ( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
-       // 	 if ( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon      
-	 
-
-       // 	 /***********************************************************************/
-       //   //                   Cut for fake photons
-       // 	 /***********************************************************************/
-
-	 
-       //   //if (!( cHadIso[j] >= 2.6 )  && (!( nHadIso[j] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[j] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
-	 
-	 
-       // 	 //if ( phoP4.DeltaR( jp4 ) < dR_gj )  dR_gj  = phoP4.DeltaR( jp4 ) ; 
-       // }	     
-       
-       // //if ( dR_gj < 0.3 ) continue ;       
-
-
        if ( jetpt ) ptJet.push_back(jp4.Pt());
        if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
        if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
