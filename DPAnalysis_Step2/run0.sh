@@ -23,13 +23,11 @@ rm run.sh
 # python sendOnBatch.py QCD_Pt-1000to1400   >> run.sh
 # python sendOnBatch.py TTJets  		  >> run.sh
 python sendOnBatch.py GMSB_L180-CTAU500   >> run.sh
-# python sendOnBatch.py GMSB_L180-CTAU10    >> run.sh
-# python sendOnBatch.py GMSB_L180-CTAU50    >> run.sh
-# python sendOnBatch.py GMSB_L180-CTAU250   >> run.sh
-# python sendOnBatch.py GMSB_L160-CTAU500   >> run.sh
+python sendOnBatch.py GMSB_L180-CTAU10    >> run.sh
+python sendOnBatch.py GMSB_L180-CTAU50    >> run.sh
+python sendOnBatch.py GMSB_L180-CTAU250   >> run.sh
+python sendOnBatch.py GMSB_L160-CTAU500   >> run.sh
 # python sendOnBatch.py GMSB_L160-CTAU100   >> run.sh
-# python sendOnBatch.py GMSB_L160-CTAU10    >> run.sh
+python sendOnBatch.py GMSB_L160-CTAU10    >> run.sh
 # python sendOnBatch.py GMSB_L160-CTAU250   >> run.sh
-# python sendOnBatch.py GMSB_L160-CTAU50    >> run.sh
-
-python sendOnBatch.py Step1_SIG           >> run.sh
+python sendOnBatch.py GMSB_L160-CTAU50    >> run.sh

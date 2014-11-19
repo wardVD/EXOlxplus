@@ -94,9 +94,9 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
                     continue
                 if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                     continue
-                if (event.ptPhotUp[0] < 85):
-                    continue
                 if (event.ptPhotUp.size() < 2):
+                    continue
+                if (event.ptPhotUp[0] < 85):
                     continue
                 if (event.sMajPhot[0] > 1.35):
                     continue
@@ -118,9 +118,9 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
                     continue
                 if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                     continue
-                if (event.ptPhotDown[0] < 85):
-                    continue
                 if (event.ptPhotDown.size() < 2):
+                    continue
+                if (event.ptPhotDown[0] < 85):
                     continue
                 if (event.sMajPhot[0] > 1.35):
                     continue
@@ -181,7 +181,7 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
 
 def function (lamb,ctau1,phot,statmet,statptphot):
 
-    listsig1 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau1+"_new.root"]
+    listsig1 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
     #listsig1 = ["./v21/Step1_SIG_new.root"]
 
     vecfilessig1 = []
@@ -245,12 +245,17 @@ def function (lamb,ctau1,phot,statmet,statptphot):
     metup_perc = fabs(vechissig1[0].Integral() - vechissig1metup[0].Integral())/max(vechissig1[0].Integral(),vechissig1metup[0].Integral())
     metdown_perc = fabs(vechissig1[0].Integral() - vechissig1metdown[0].Integral())/max(vechissig1[0].Integral(),vechissig1metdown[0].Integral())
 
-    print "jetup: " + str(100*jetup_perc)
-    print "jetdown: " + str(100*jetdown_perc)
-    print "photup: " + str(100*photup_perc)
-    print "photdown: " + str(100*photdown_perc)
-    print "metup: " + str(100*metup_perc)
-    print "metdown: " + str(100*metdown_perc)
+    f = open("percentageL"+lamb+"CT"+ctau1+".txt","w")
+
+    f.write("jetup: " + str(100*jetup_perc) + "\n")
+    f.write("jetdown: " + str(100*jetdown_perc) + "\n")
+    f.write("photup: " + str(100*photup_perc) + "\n")
+    f.write("photdown: " + str(100*photdown_perc) + "\n")
+    f.write("metup: " + str(100*metup_perc) + "\n")
+    f.write("metdown: " + str(100*metdown_perc) + "\n")
+    f.write("statistical: " + str(1/sqrt(vechissig1[0].Integral())))
+
+    f.close()
 
 def main():
     #function("180","10","500",1)
@@ -262,25 +267,25 @@ def main():
     # function("180","500","500",2,30,88)
 
     # function("180","250","500",2,27,85)
-    # function("180","250",2,30,85)
+    function("180","250",2,30,85)
     # function("180","250","500",2,33,85)
     # function("180","250","500",2,30,82)
     # function("180","250","500",2,30,88)
 
     # function("180","50","500",2,27,85)
-    # function("180","50",2,30,85)
+    function("180","50",2,30,85)
     # function("180","50","500",2,33,85)
     # function("180","50","500",2,30,82)
     # function("180","50","500",2,30,88)
 
     # function("180","10","500",2,27,85)
-    # function("180","10",2,30,85)
+    function("180","10",2,30,85)
     # function("180","10","500",2,33,85)
     # function("180","10","500",2,30,82)
     # function("180","10","500",2,30,88)
 
     # function("160","500","500",2,27,85)
-    # function("160","500",2,30,85)
+    function("160","500",2,30,85)
     # function("160","500","500",2,33,85)
     # function("160","500","500",2,30,82)
     # function("160","500","500",2,30,88)
@@ -298,13 +303,13 @@ def main():
     # function("160","100","500",2,30,88)
 
     # function("160","50","500",2,27,85)
-    # function("160","50",2,30,85)
+    function("160","50",2,30,85)
     # function("160","50","500",2,33,85)
     # function("160","50","500",2,30,82)
     # function("160","50","500",2,30,88)
 
     # function("160","10","500",2,27,85)
-    # function("160","10",2,30,85)
+    function("160","10",2,30,85)
     # function("160","10","500",2,33,85)
     # function("160","10","500",2,30,82)
     # function("160","10","500",2,30,88)

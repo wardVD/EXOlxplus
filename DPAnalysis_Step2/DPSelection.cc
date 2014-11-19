@@ -252,8 +252,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
      if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
      else MC = 1;
-	
-     if (triggered == 0 || triggered == 2) continue;
+     	
+     if (!(triggered == 1 || triggered == 3)) continue;
 
      int entries = getsumcounterzero(outname); 
 
@@ -499,7 +499,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
                                         h000->Fill(1.);
      if (nGoodVtx < 0) continue; 	h000->Fill(2.);
-     if (MET < 30) continue; 	        h000->Fill(3.);
+     if (MET < 28) continue; 	        h000->Fill(3.);
      if (nJet < 2) continue;  	        h000->Fill(4.);
      if (nPhot < 2) continue;           h000->Fill(5.);
 		
