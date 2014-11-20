@@ -501,7 +501,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
      if (nGoodVtx < 0) continue; 	h000->Fill(2.);
      if (MET < 28) continue; 	        h000->Fill(3.);
      if (nJet < 2) continue;  	        h000->Fill(4.);
-     if (nPhot < 2) continue;           h000->Fill(5.);
+     if (nPhot < 1) continue;           h000->Fill(5.);
 		
      anaTree->Fill();
 

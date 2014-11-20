@@ -2,7 +2,7 @@ imax 1
 jmax 1
 kmax *
 ---------------
-shapes * * simple-shapes-TH1L160CT100.root $PROCESS $PROCESS_$SYSTEMATIC
+shapes * * simple-shapes-TH1L160CT10.root $PROCESS $PROCESS_$SYSTEMATIC
 ---------------
 bin 1
 observation 43

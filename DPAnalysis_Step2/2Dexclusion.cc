@@ -22,11 +22,12 @@ void rootlogon();
 
 
 TString savedir = "./img_fit/";
+TString extra = "1phot";
 
-TFile* file_CT10L160 = new TFile(("./higgsCombineL160CTau10shape.Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L160 = new TFile(("./higgsCombineL160CTau50shape.Asymptotic.mH120.root"), "READ");
-TFile* file_CT100L160 = new TFile(("./higgsCombineL160CTau100shape.Asymptotic.mH120.root"), "READ");
-TFile* file_CT50L160 = new TFile(("./higgsCombineL160CTau500shape.Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 
 void plot_limit_mass(std::string LAMBDA){
@@ -35,12 +36,12 @@ void plot_limit_mass(std::string LAMBDA){
   
   double xsec;
 
-  if ( LAMBDA=="160" ) {
-    xsec = 0.0277;
-    TTree * CT500 = (TTree*)file_CT500L160->Get("limit");
-    TTree * CT10 = (TTree*)file_CT10L160->Get("limit");
-    TTree * CT50 = (TTree*)file_CT50L160->Get("limit");
-    TTree * CT100 = (TTree*)file_CT100L160->Get("limit");
+  if ( LAMBDA=="180" ) {
+    xsec = 0.0145;
+    TTree * CT500 = (TTree*)file_CT500L180->Get("limit");
+    TTree * CT10 = (TTree*)file_CT10L180->Get("limit");
+    TTree * CT50 = (TTree*)file_CT50L180->Get("limit");
+    TTree * CT250 = (TTree*)file_CT250L180->Get("limit");
   }
 
   Double_t obs_lim[4]= {0.};
@@ -73,18 +74,18 @@ void plot_limit_mass(std::string LAMBDA){
   TH1F* CT10histo97 = new TH1F("CT10histo97","",100,0,100.0);
   CT10->Draw("limit>>CT10histo97", "quantileExpected>0.97 && quantileExpected<0.98");
 
-  TH1F* CT100histo1 = new TH1F("CT100histo1","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo1", "quantileExpected==-1");
-  TH1F* CT100histo2 = new TH1F("CT100histo2","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo2", "quantileExpected>0.02 && quantileExpected<0.03");
-  TH1F* CT100histo16 = new TH1F("CT100histo16","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo16", "quantileExpected>0.15 && quantileExpected<0.16");
-  TH1F* CT100histo50 = new TH1F("CT100histo50","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo50", "quantileExpected==0.5");
-  TH1F* CT100histo84 = new TH1F("CT100histo84","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo84", "quantileExpected>0.83 && quantileExpected<0.84");
-  TH1F* CT100histo97 = new TH1F("CT100histo97","",100,0,100.0);
-  CT100->Draw("limit>>CT100histo97", "quantileExpected>0.97 && quantileExpected<0.98");
+  TH1F* CT250histo1 = new TH1F("CT250histo1","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo1", "quantileExpected==-1");
+  TH1F* CT250histo2 = new TH1F("CT250histo2","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo2", "quantileExpected>0.02 && quantileExpected<0.03");
+  TH1F* CT250histo16 = new TH1F("CT250histo16","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo16", "quantileExpected>0.15 && quantileExpected<0.16");
+  TH1F* CT250histo50 = new TH1F("CT250histo50","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo50", "quantileExpected==0.5");
+  TH1F* CT250histo84 = new TH1F("CT250histo84","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo84", "quantileExpected>0.83 && quantileExpected<0.84");
+  TH1F* CT250histo97 = new TH1F("CT250histo97","",100,0,100.0);
+  CT250->Draw("limit>>CT250histo97", "quantileExpected>0.97 && quantileExpected<0.98");
 
   TH1F* CT50histo1 = new TH1F("CT50histo1","",100,0,100.0);
   CT50->Draw("limit>>CT50histo1", "quantileExpected==-1");
@@ -123,46 +124,46 @@ void plot_limit_mass(std::string LAMBDA){
     CT50histo97->GetMean(),
   };
 
-  Float_t upperlimit100[5] = {
-    CT100histo2->GetMean(),
-    CT100histo16->GetMean(),
-    CT100histo50->GetMean(),
-    CT100histo84->GetMean(),
-    CT100histo97->GetMean(),
+  Float_t upperlimit250[5] = {
+    CT250histo2->GetMean(),
+    CT250histo16->GetMean(),
+    CT250histo50->GetMean(),
+    CT250histo84->GetMean(),
+    CT250histo97->GetMean(),
   };
 
-  obs_lim[0] = xsec*1.557;
-  obs_lim[1] = xsec*0.53;
-  obs_lim[2] = xsec*0.4378;
-  obs_lim[3] = xsec*0.568;
+  obs_lim[0] = xsec*CT10histo1->GetMean();
+  obs_lim[1] = xsec*CT50histo1->GetMean();
+  obs_lim[2] = xsec*CT250histo1->GetMean();
+  obs_lim[3] = xsec*CT500histo1->GetMean();
 
   exp_lim[0] = xsec*upperlimit10[2];
   exp_lim[1] = xsec*upperlimit50[2];
-  exp_lim[2] = xsec*upperlimit100[2];
+  exp_lim[2] = xsec*upperlimit250[2];
   exp_lim[3] = xsec*upperlimit500[2];
 
-  Double_t mTh[4] = {10.0,50.0,100.0,500.0};
+  Double_t mTh[4] = {1.0,5.0,25.0,50.0};
   Double_t xsTh[4] = {xsec,xsec,xsec,xsec};
 
-  Double_t x_pdf[8] = {10.0,50.0,100.0,500.0,500.0,100.0,50.0,10.0};
+  Double_t x_pdf[8] = {1.0,5.0,25.0,50.0,50.0,25.0,5.0,1.0};
 
   
   Double_t y_pdf_1sig[8] = { xsec*upperlimit10[1],
 			     xsec*upperlimit50[1],
-			     xsec*upperlimit100[1],
+			     xsec*upperlimit250[1],
 			     xsec*upperlimit500[1],
 			     xsec*upperlimit500[3],
-                             xsec*upperlimit100[3],
+                             xsec*upperlimit250[3],
                              xsec*upperlimit50[3],
                              xsec*upperlimit10[3]};
 
 
   Double_t y_pdf_2sig[8] = { xsec*upperlimit10[0],
                              xsec*upperlimit50[0],
-                             xsec*upperlimit100[0],
+                             xsec*upperlimit250[0],
                              xsec*upperlimit500[0],
                              xsec*upperlimit500[4],
-                             xsec*upperlimit100[4],
+                             xsec*upperlimit250[4],
                              xsec*upperlimit50[4],
                              xsec*upperlimit10[4]}
 
@@ -194,7 +195,7 @@ void plot_limit_mass(std::string LAMBDA){
   TMultiGraph* mg = new TMultiGraph;
  
   mg->Add(exp_lim_graph);
-  mg->Add(ul_lim_graph);
+  //mg->Add(ul_lim_graph);
 
 
   TCanvas* c0 = new TCanvas("exclusion limit", "exclusion limit", 1);
@@ -219,19 +220,19 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim_graph->Draw("LA");
   Twosig_graph->Draw("Fsame");
   Onesig_graph->Draw("Fsame");
-  ul_lim_graph->Draw("Lsame");
+  //ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
-  exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (mm)");
-  exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) #times BR (pb)");
-  exp_lim_graph->GetYaxis()->SetRangeUser(0.0002, 10);
-  exp_lim_graph->GetXaxis()->SetRangeUser(0., 9000.);
+  exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
+  exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) (pb)");
+  exp_lim_graph->GetYaxis()->SetRangeUser(0.0005, 100);
+  exp_lim_graph->GetXaxis()->SetRangeUser(1, 9000.);
   exp_lim_graph->GetXaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetXaxis()->SetTitleOffset(1.24);
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetYaxis()->SetTitleOffset(1.6);
 
-  ul_lim_graph->Draw("same");
+  //ul_lim_graph->Draw("same");
 
   // integrated luminosity
   std::string s_lumi;
@@ -256,25 +257,25 @@ void plot_limit_mass(std::string LAMBDA){
   xsTh_vs_m->Draw("Csame");
    
    
-  TLegend* leg = new TLegend(0.45,0.55,0.9,0.93);
+  TLegend* leg = new TLegend(0.45,0.6,0.9,0.93);
   leg->SetFillStyle(0); leg->SetBorderSize(0);
   leg->SetFillColor(0);
 
   TString massLeg;
 
-  //if ( LAMBDA=="160" ) { massLeg = "#Lambda = 160: M_{#tilde{#chi}^{0}_{1}} =  227.6 GeV/c^{2}";}
   if ( LAMBDA=="160" ) { massLeg = "#Lambda = 160: M_{#tilde{#chi}^{0}_{1}} =  227.6 GeV/c^{2}";}
+  if ( LAMBDA=="180" ) { massLeg = "#Lambda = 180: M_{#tilde{#chi}^{0}_{1}} =  256.8 GeV/c^{2}";}
  
   leg->SetHeader(massLeg);
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
-  leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
-  leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "LP");
+  //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
+  leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L160_5.pdf");
+  c0->SaveAs("exclusion_limit_L180"+extra+".pdf");
 
 }
 

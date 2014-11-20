@@ -150,11 +150,15 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("180","10",1)
-    function("180","50",1)
-    function("180","250",1)
-    function("180","500",1)
-    #function("180","100",2)
+    # function("180","10",1)
+    # function("180","50",1)
+    # function("180","250",1)
+    # function("180","500",1)
+
+    function("160","10",1)
+    function("160","50",1)
+    function("160","100",1)
+    function("160","500",1)
 
 if __name__ == "__main__":
     main()

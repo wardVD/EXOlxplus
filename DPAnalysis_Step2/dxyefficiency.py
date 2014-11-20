@@ -137,7 +137,7 @@ def main():
     c1.SetLeftMargin(0.15)
     CTAU10.SetMarkerColor(1)
     CTAU50.SetMarkerColor(2)
-    CTAU250.SetMarkerColor(3)
+    CTAU250.SetMarkerColor(5)
     CTAU500.SetMarkerColor(4)
     leg = TLegend(0.45,0.70,0.89,0.89)
     leg.SetFillColor(kWhite)

@@ -22,11 +22,12 @@ void rootlogon();
 
 
 TString savedir = "./img_fit/";
+TString extra = "1phot";
 
-TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata.Asymptotic.mH120.root"), "READ");
-TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata.Asymptotic.mH120.root"), "READ");
-TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata.Asymptotic.mH120.root"), "READ");
-TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata.Asymptotic.mH120.root"), "READ");
+TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT500L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT250L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau250shapedata"+extra+".Asymptotic.mH120.root"), "READ");
+TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau500shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 
 
 void plot_limit_mass(std::string LAMBDA){
@@ -141,10 +142,10 @@ void plot_limit_mass(std::string LAMBDA){
   exp_lim[2] = xsec*upperlimit250[2];
   exp_lim[3] = xsec*upperlimit500[2];
 
-  Double_t mTh[4] = {10.0,50.0,250.0,500.0};
+  Double_t mTh[4] = {1.0,5.0,25.0,50.0};
   Double_t xsTh[4] = {xsec,xsec,xsec,xsec};
 
-  Double_t x_pdf[8] = {10.0,50.0,250.0,500.0,500.0,250.0,50.0,10.0};
+  Double_t x_pdf[8] = {1.0,5.0,25.0,50.0,50.0,25.0,5.0,1.0};
 
   
   Double_t y_pdf_1sig[8] = { xsec*upperlimit10[1],
@@ -222,10 +223,10 @@ void plot_limit_mass(std::string LAMBDA){
   //ul_lim_graph->Draw("Lsame");
   exp_lim_graph->Draw("Lsame");
 
-  exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (mm)");
-  exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) #times BR (pb)");
-  exp_lim_graph->GetYaxis()->SetRangeUser(0.0002, 100);
-  exp_lim_graph->GetXaxis()->SetRangeUser(10, 9000.);
+  exp_lim_graph->GetXaxis()->SetTitle("c#tau_{#tilde{#chi^{0}_{1}}} (cm)");
+  exp_lim_graph->GetYaxis()->SetTitle("#sigma ( #tilde{#chi^{0}_{1}} #rightarrow #tilde{G}#gamma) (pb)");
+  exp_lim_graph->GetYaxis()->SetRangeUser(0.0005, 100);
+  exp_lim_graph->GetXaxis()->SetRangeUser(1, 9000.);
   exp_lim_graph->GetXaxis()->SetTitleSize(0.048);
   exp_lim_graph->GetXaxis()->SetTitleOffset(1.24);
   exp_lim_graph->GetYaxis()->SetTitleSize(0.048);
@@ -256,7 +257,7 @@ void plot_limit_mass(std::string LAMBDA){
   xsTh_vs_m->Draw("Csame");
    
    
-  TLegend* leg = new TLegend(0.45,0.55,0.9,0.93);
+  TLegend* leg = new TLegend(0.45,0.6,0.9,0.93);
   leg->SetFillStyle(0); leg->SetBorderSize(0);
   leg->SetFillColor(0);
 
@@ -269,12 +270,12 @@ void plot_limit_mass(std::string LAMBDA){
   leg->SetTextFont(22);
   leg->AddEntry(xsTh_vs_m,"Theoretical LO cross-section","L");
   //leg->AddEntry(ul_lim_graph, "Observed  95% CL upper limit", "L");
-  leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "LP");
+  leg->AddEntry(exp_lim_graph, "Expected 95% CL upper limit", "L");
   leg->AddEntry(Onesig_graph, "#pm 1 #sigma Expected", "F");
   leg->AddEntry(Twosig_graph, "#pm 2 #sigma Expected", "F");
   leg->Draw("same");
 
-  c0->SaveAs("exclusion_limit_L180.pdf");
+  c0->SaveAs("exclusion_limit_L180"+extra+".pdf");
 
 }
 
