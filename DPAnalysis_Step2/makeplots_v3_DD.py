@@ -22,8 +22,8 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.sMajPhot[0] > 1.35):
                 continue
-            if (event.MET < 30):
-                continue
+#            if (event.MET < 30):
+#                continue
             if(flag == 0):
                 lum = 19280.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -50,7 +50,6 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 
             if (flag == 1):
-                #if (event.ptPhot[0] < 250):
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
                 if (event.ptPhot.size() > phot):
                     vechisto[1].Fill( event.ptPhot[1], 1./event.EfficiencyScaleFactors )
@@ -60,7 +59,6 @@ def loop(vec, vechisto, flag, phot):
                     vechisto[3].Fill( event.ptJet[1], 1./event.EfficiencyScaleFactors )
 
                 for i in range(len(event.dxyConv)):
-                    #if (abs(event.dxyConv[i]) < 0.1 and event.ConvChi2[i] > 0.01):
                     if (abs(event.ConvChi2[i] > 0.01)):
                         vechisto[4].Fill( fabs(event.dxyConv[i]), 1./event.EfficiencyScaleFactors )
                             
@@ -114,6 +112,7 @@ def function (lamb,ctau1,ctau2,phot):
     listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
     listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
     listfakelow = ["./v21/Run2012Afakelow.root","./v21/Run2012Bfakelow.root","./v21/Run2012C_1fakelow.root","./v21/Run2012C_2fakelow.root","./v21/Run2012C_3fakelow.root","./v21/Run2012D_1fakelow.root","./v21/Run2012D_2fakelow.root","./v21/Run2012D_3fakelow.root"]
+    
 
     vecfilesttjets = []
     for item in listttjets:
@@ -165,7 +164,12 @@ def function (lamb,ctau1,ctau2,phot):
     photisottjet = TH1D("photIsoTTJet","",50,0,5)
     phohoverettjet = TH1D("phoHoverETTJet","",50,0,5)
     vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet]
+    
+    for each in vechisttjet:
+        each.Sumw2()
+
     vechisttjet = loop(vecfilesttjets, vechisttjet, 0, phot)
+
 
     ptpholeadsig1 = TH1D("PtPhotonleadingSignal1","",24,0,500)
     ptphosubleadsig1 = TH1D("PtPhotonsubleadingSignal1","",12,0,500)
@@ -179,12 +183,16 @@ def function (lamb,ctau1,ctau2,phot):
     smajsig1 = TH1D("sMajSignal1","",20,0,3)
     sminsig1 = TH1D("sMinSignal1","",20,0,0.5)
     sigietasig1 = TH1D("SigmaIetaSignal1","",50,0,0.03)
-    etasig1 = TH1D("EtaSignal1","",50,0,2)
+    etasig1 = TH1D("EtaSignal1","",50,0,2)    
     chadisosig1 = TH1D("cHadIsoSignal1","",50,0,5)
     nhadisosig1 = TH1D("nHadIsoSignal1","",50,0,5)
     photisosig1 = TH1D("photIsoSignal1","",50,0,5)
     phohoveresig1 = TH1D("phoHoverESignal1","",50,0,5)
     vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1]
+    
+    for each in vechissig1:
+        each.Sumw2()
+
     vechissig1 = loop(vecfilessig1, vechissig1, 0, phot)
 
     ptpholeadsig2 = TH1D("PtPhotonleadingSignal2","",24,0,500)
@@ -205,7 +213,12 @@ def function (lamb,ctau1,ctau2,phot):
     photisosig2 = TH1D("photIsoSignal2","",50,0,5)
     phohoveresig2 = TH1D("phoHoverESignal2","",50,0,5)
     vechissig2 = [ptpholeadsig2,ptphosubleadsig2,ptjetleadsig2,ptjetsubleadsig2,dxysig2,metsig2,njetssig2,nphotsig2,nvertsig2,smajsig2,sminsig2,sigietasig2,etasig2,chadisosig2,nhadisosig2,photisosig2,phohoveresig2]
+    
+    for each in vechissig2:
+        each.Sumw2()
+
     vechissig2 = loop(vecfilessig2, vechissig2, 0, phot)
+
 
     ptpholead = TH1D("PtPhotonleading","",24,0,500)
     ptphosublead = TH1D("PtPhotonsubleading","",12,0,500)
@@ -225,7 +238,12 @@ def function (lamb,ctau1,ctau2,phot):
     photiso = TH1D("photIso","",50,0,5)
     phohovere = TH1D("phoHoverE","",50,0,5)
     vechis = [ptpholead,ptphosublead,ptjetlead,ptjetsublead,dxy,met,njets,nphot,nvert,smaj,smin,sigieta,eta,chadiso,nhadiso,photiso,phohovere]
+    
+    for each in vechis:
+        each.Sumw2()
+
     vechis = loop(vecfilesdata, vechis, 1, phot)
+
 
     ptpholeadisolow = TH1D("PtPhotonleadingisolow","",24,0,500)
     ptphosubleadisolow = TH1D("PtPhotonsubleadingisolow","",12,0,500)
@@ -245,6 +263,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisoisolow = TH1D("photIsoisolow","",50,0,5)
     phohovereisolow = TH1D("phoHoverEisolow","",50,0,5)
     vechisisolow= [ptpholeadisolow,ptphosubleadisolow,ptjetleadisolow,ptjetsubleadisolow,dxyisolow,metisolow,njetsisolow,nphotisolow,nvertisolow,smajisolow,sminisolow,sigietaisolow,etaisolow,chadisoisolow,nhadisoisolow,photisoisolow,phohovereisolow]
+
+    for each in vechisisolow:
+        each.Sumw2()
+
     vechisisolow = loop(vecfilesdataisolow, vechisisolow, 2, phot)
 
     
@@ -266,6 +288,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisofakehigh = TH1D("photIsofakehigh","",50,0,5)
     phohoverefakehigh = TH1D("phoHoverEfakehigh","",50,0,5)
     vechisfakehigh = [ptpholeadfakehigh,ptphosubleadfakehigh,ptjetleadfakehigh,ptjetsubleadfakehigh,dxyfakehigh,metfakehigh,njetsfakehigh,nphotfakehigh,nvertfakehigh,smajfakehigh,sminfakehigh,sigietafakehigh,etafakehigh,chadisofakehigh,nhadisofakehigh,photisofakehigh,phohoverefakehigh]
+
+    for each in vechisfakehigh:
+        each.Sumw2()
+
     vechisfakehigh = loop(vecfilesfakehigh, vechisfakehigh, 1, phot)
 
     
@@ -287,6 +313,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisofakelow = TH1D("photIsofakelow","",50,0,5)
     phohoverefakelow = TH1D("phoHoverEfakelow","",50,0,5)
     vechisfakelow = [ptpholeadfakelow,ptphosubleadfakelow,ptjetleadfakelow,ptjetsubleadfakelow,dxyfakelow,metfakelow,njetsfakelow,nphotfakelow,nvertfakelow,smajfakelow,sminfakelow,sigietafakelow,etafakelow,chadisofakelow,nhadisofakelow,photisofakelow,phohoverefakelow]
+
+    for each in vechisfakelow:
+        each.Sumw2()
+
     vechisfakelow = loop(vecfilesfakelow, vechisfakelow, 1, phot)
     
 
@@ -339,9 +369,9 @@ def function (lamb,ctau1,ctau2,phot):
     vechisfakelow[4].Scale(ratiofakelow)
     vechisfakehigh[4].Scale(ratiofakehigh)
 
-    """
     vechis[4].SetBinContent(3,0.)
     vechis[4].SetBinContent(2,0.)
+    """
     vechissig[4].SetBinContent(1,0.)
     vechissig[4].SetBinContent(2,0.)
     vechisttjet[4].SetBinContent(1,0.)
@@ -349,6 +379,7 @@ def function (lamb,ctau1,ctau2,phot):
     vechisisolow[4].SetBinContent(1,0.)
     vechisisolow[4].SetBinContent(2,0.)
     """
+
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
     for it in vechis:
@@ -374,8 +405,15 @@ def function (lamb,ctau1,ctau2,phot):
 
 
 def main():
-    #function("180","10","500",1)
-    function("180","500","500",2)
+    #function("180","500","500",2)
+    #function("180","250","500",2)
+    #function("180","50","500",2)
+    function("180","10","500",2)
+
+    #function("160","500","500",2)
+    #function("160","100","500",2)
+    #function("160","50","500",2)
+    #function("160","10","500",2)
 
 if __name__ == "__main__":
     main()

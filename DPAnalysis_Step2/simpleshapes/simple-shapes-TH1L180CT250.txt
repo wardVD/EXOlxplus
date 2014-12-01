@@ -14,10 +14,10 @@ process         0          1
 rate            4.88       39.5
 --------------------------------
 lumi            lnN    1.022       -
-bkgstat         lnN     -         1.16
+bkgstat         lnN     -         1.1313
 sigmasystconv   lnN    1.19       -
 sigmasystjet    lnN    1.0019     -
 sigmasystphot  	lnN    1.0030     -
-simgastat       lnN    1.45       -
+simgastat       lnN    1.0050     -
 alpha  shapeN2    -          1.   uncertainty on signal resolution. Assume the histogram is a 2 sigma shift,
 #                                so divide the unit gaussian by 2 before doing the interpolation

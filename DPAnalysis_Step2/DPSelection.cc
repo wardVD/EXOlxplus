@@ -24,9 +24,12 @@
 #define pi 3.141592653589793
 #include "DPSelection.h"
 
+
 using namespace std;
 using std::vector;
 using std::cout; using std::endl;
+
+
 
 
 //===== constructor  ====
@@ -181,6 +184,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
    Float_t EfficiencyScaleFactors;
    Float_t PUScaleFactors;
 
+
    TTree *anaTree     = new TTree("anaTree","Tree of variables"); 
    anaTree->Branch("nPhot", &nPhot, "nPhot/I");
    anaTree->Branch("nMuon", &nMuon, "nMuon/I");
@@ -252,8 +256,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   
      if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
      else MC = 1;
-     	
-     if (!(triggered == 1 || triggered == 3)) continue;
+	
+     if (triggered != 1) continue;
 
      int entries = getsumcounterzero(outname); 
 
@@ -275,8 +279,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
 
      ptPhot.clear();
-     ptPhotUp.clear();
-     ptPhotDown.clear();
      ptJet.clear();
      ptJetUp.clear();
      ptJetDown.clear();
@@ -345,6 +347,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        //if (!matching) continue;
        
+
        dzConv.push_back(convDz[i]);
        dxyConv.push_back(convDxy[i]);
        phiConv.push_back(convPhi[i]);
@@ -356,41 +359,28 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 			 
 
        TLorentzVector phoP4( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
-       TLorentzVector phoP4up( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
-       TLorentzVector phoP4down( phoPx[i], phoPy[i], phoPz[i], phoE[i] ) ;
 
-       double egScaleup = 1.;
-       double egScaledown  = 1.;
+       int systType = 1;
 
-       bool photpt = true;
-       bool photptup = true;
-       bool photptdown = true;
+       double egScale = 1. ;
        
-       egScaleup = ( fabs(phoP4up.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
-       egScaledown = ( fabs(phoP4down.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
+       if ( systType == 0 ) egScale = 1.;
+       if ( systType == 1 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 1.006 : 1.015 ;
+       if ( systType == 2 ) egScale = ( fabs(phoP4.Eta()) < 1.479 ) ? 0.994 : 0.985 ;
 
-       phoP4up = phoP4up * egScaleup;
-       phoP4down = phoP4down * egScaledown;
+       phoP4 = phoP4 * egScale;
        
        if ( fabs(fSpike[i]) > 0.001 ) continue ;
-       if ( phoP4.Pt() < 50. )  photpt = false ;
-       if ( phoP4up.Pt() < 50. )  photptup = false ;
-       if ( phoP4down.Pt() < 50. )  photptdown = false ;
-       if ( fabs(phoP4.Eta()) > 1.47 )  photpt = false ;
-       if ( fabs(phoP4up.Eta()) > 1.47 )  photptup = false ;
-       if ( fabs(phoP4down.Eta()) > 1.47 )  photptdown = false ;
+       if ( phoP4.Pt() < 50. )  continue ;
+       if ( fabs(phoP4.Eta()) > 1.47 )  continue ;
        if ( phoHoverE[i] > 0.05 ) continue ;
        //if ( sMinPho[i] < 0.15 || sMinPho[i] > 0.3 )  continue ; WAS WEG
        //if ( sMinPho[i] < 0.12 || sMinPho[i] > 0.38 )                continue ; WAS WEG
        if ( sigmaIeta[i] >  0.012 ) continue ;
        //if ( dR_TrkPho[i] < 0.6 ) continue; WAS WEG
-       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
-       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
-       if ( phoP4down.Eta() > -0.75 && phoP4down.Eta() < -0.6 && phoP4down.Phi() > -1. && phoP4down.Phi() < -0.8 ) photptdown = false ;
-
-       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) photpt = false ;
-       if ( phoP4up.Eta() > 0.80 && phoP4up.Eta() < 0.95 && phoP4up.Phi() > -1.95 && phoP4up.Phi() < -1.8 ) photptup = false ;
-       if ( phoP4down.Eta() > 0.80 && phoP4down.Eta() < 0.95 && phoP4down.Phi() > -1.95 && phoP4down.Phi() < -1.8 ) photptdown = false ;
+       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) continue ;
+       if ( phoP4.Eta() > 0.80 && phoP4.Eta() < 0.95 && phoP4.Phi() > -1.95 && phoP4.Phi() < -1.8 ) continue ;
+       
        
        /***********************************************************************/
        //                   Cut for isolated photons  
@@ -398,12 +388,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        
                
        if ( cHadIso[i] >= 2.6 ) continue ;  // chargedHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) photpt = false ;  // neutralHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4up.Pt()   ) ) photptup = false ;  // neutralHadron
-       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4down.Pt()   ) ) photptdown = false ;  // neutralHadron
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
-       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+       if ( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) ) continue ;  // neutralHadron
+       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) continue ;  // photon
+       
 
        /***********************************************************************/
        //                   Cut for fake photons                                                                                                                                                          
@@ -414,13 +401,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        */
 
        if (phoMatchedEle[i] > 0) continue;
+
+
+
        
-       if ( photpt ) ptPhot.push_back(phoP4.Pt());
-       if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
-       if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());
+       ptPhot.push_back(phoP4.Pt());
        sort(ptPhot.begin(),ptPhot.end(),comp_pair);
-       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
-       sort(ptPhotDown.begin(),ptPhotDown.end(),comp_pair);
        etaPhot.push_back(fabs(phoP4.Eta()));
        phiPhot.push_back(fabs(phoP4.Phi()));
        sMinPhot.push_back(sMinPho[i]);
@@ -448,43 +434,21 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
        
        TLorentzVector jp4( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
-       TLorentzVector jp4up( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
-       TLorentzVector jp4down( jetPx[j], jetPy[j], jetPz[j], jetE[j] ) ;
 
-       double jCorr;
 
-       jCorr = ( 1. + jecUnc[j] ) ;
-       jp4up = jp4up*jCorr;
-       
-       jCorr = ( 1. - jecUnc[j] ) ;
-       jp4down = jp4down*jCorr;
 
-       bool jetpt = true;
-       bool jetptup = true;
-       bool jetptdown = true;
-
-       if ( jp4.Pt() < 30) jetpt == false;
-       if ( jp4up.Pt() < 30) jetptup == false;
-       if ( jp4down.Pt() < 30) jetptdown == false;
-
-       if ( fabs(jp4.Eta()) > 2.4 ) jetpt == false ;
-       if ( fabs(jp4up.Eta()) > 2.4 ) jetptup == false ;
-       if ( fabs(jp4down.Eta()) > 2.4 ) jetptdown == false ;
+       if (jp4.Pt() < 30) continue;
+       if ( fabs(jp4.Eta()) > 2.4 ) continue ;
        
        if ( jetNDau[j] < (double)   2 )  continue ;
        if ( jetCEF[j] >= (double)0.99 )  continue ;
        if ( jetNEF[j] >= (double)0.99 )  continue ;
        if ( jetNHF[j] >= (double)0.99 )  continue ;
-       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetpt == false ;
-       if ( fabs( jp4up.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptup == false ;
-       if ( fabs( jp4down.Eta() ) < 2.4 && jetCM[j]  <= 0 ) jetptdown == false ;
-      
-       if ( jetpt ) ptJet.push_back(jp4.Pt());
-       if ( jetptup ) ptJetUp.push_back(jp4up.Pt());
-       if ( jetptdown ) ptJetDown.push_back(jp4down.Pt());
+       if ( fabs( jp4.Eta() ) < 2.4 && jetCM[j]  <= 0 ) continue ;
+       
+
+       ptJet.push_back(jp4.Pt());
        sort(ptJet.begin(),ptJet.end(),comp_pair);
-       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
-       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
      }
 
      nPhot = ptPhot.size(); 
@@ -499,9 +463,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
 
                                         h000->Fill(1.);
      if (nGoodVtx < 0) continue; 	h000->Fill(2.);
-     if (MET < 28) continue; 	        h000->Fill(3.);
+     if (MET > 30) continue; 	        h000->Fill(3.);
      if (nJet < 2) continue;  	        h000->Fill(4.);
-     if (nPhot < 1) continue;           h000->Fill(5.);
+     if (nPhot < 2) continue;           h000->Fill(5.);
 		
      anaTree->Fill();
 
