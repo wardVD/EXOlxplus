@@ -36,7 +36,6 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
                 for i in range(len(event.dxyConv)):
                     if (event.ConvChi2[i] > 0.01):
                         vechisto[0].Fill( fabs(event.dxyConv[i]), (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-                        vechisto[1].Fill( fabs(event.dxyConv[i]))
 
 
         if (flag == 1):
@@ -177,49 +176,23 @@ def loop(vec, vechisto, flag, phot, statmet, statptphot):
                 for i in range(len(event.dxyConv)):
                     if (event.ConvChi2[i] > 0.01):
                         vechisto[0].Fill( fabs(event.dxyConv[i]), (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-
-        if (flag == 7):
-            for event in tree:
-                if (event.nPhot < phot):
-                    continue
-                if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
-                    continue
-                if (event.ptJet[0] < 35):
-                    continue
-                if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
-                    continue
-                if (event.ptPhot[0] < 85):
-                    continue
-                if (event.sMajPhot[0] > 1.35):
-                    continue
-
-                for i in range(len(event.dxyConv)):
-                    if (event.ConvChi2[i] > 0.01):
-                        vechisto[0].Fill( fabs(event.dxyConv[i]))
                 
     return vechisto
 
 def function (lamb,ctau1,phot,statmet,statptphot):
 
-    listsig1 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
-
+    listsig1 = ["./v22_1phot/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
+   
     vecfilessig1 = []
     for item in listsig1:
         temp = TFile.Open(item)
         vecfilessig1.append(temp)
 
-    vecfilesdataisolow = []
-    for item in listdataisolow:
-        temp = TFile.Open(item)
-        vecfilesdataisolow.append(temp)
-
     #xbins = array('d',[0.,0.1,0.3, 1., 3., 6.])
     xbins = array('d',[0.,0.3, 1., 3., 6.])
 
     dxysig1 = TH1D("DxySignal1","",4,xbins)
-    dxysig1.Sumw2()
-    vechissig1 = [dxysig1,dxysig1]
+    vechissig1 = [dxysig1]
     vechissig1 = loop(vecfilessig1, vechissig1, 0, phot, statmet, statptphot)
 
     dxysig1ptup = TH1D("DxySignal1PtUp","",4,xbins)
@@ -246,29 +219,23 @@ def function (lamb,ctau1,phot,statmet,statptphot):
     vechissig1metdown = [dxysig1metdown]
     vechissig1metdown = loop(vecfilessig1, vechissig1metdown, 6, phot, statmet, statptphot)
 
-    dxyisolow = TH1D("Dxyisolow","",4,xbins)
-    dxyisolow.Sumw2()
-    vechisisolow= [dxyisolow]
-    vechisisolow = loop(vecfilesdataisolow, vechisisolow, 7, phot, statmet, statptphot)
+    output = TFile.Open("./ctau"+ctau1+"lambda"+lamb+"_1phot/output"+str(phot)+"MET"+str(statmet)+"PtPhot"+str(statptphot)+"_GMSB_new.root","recreate")
 
-    # output = TFile.Open("./ctau"+ctau1+"lambda"+lamb+"/output"+str(phot)+"MET"+str(statmet)+"PtPhot"+str(statptphot)+"_GMSB_new.root","recreate")
-
-    # for it in vechissig1:
-    #     it.Write()
-    # for it in vechissig1ptup:
-    #     it.Write()
-    # for it in vechissig1ptdown:
-    #     it.Write()
-    # for it in vechissig1phoup:
-    #     it.Write()
-    # for it in vechissig1phodown:
-    #     it.Write()
-    # for it in vechissig1metup:
-    #     it.Write()
-    # for it in vechissig1metdown:
-    #     it.Write()
-        
-    # output.Close()
+    for it in vechissig1:
+        it.Write()
+    for it in vechissig1ptup:
+        it.Write()
+    for it in vechissig1ptdown:
+        it.Write()
+    for it in vechissig1phoup:
+        it.Write()
+    for it in vechissig1phodown:
+        it.Write()
+    for it in vechissig1metup:
+        it.Write()
+    for it in vechissig1metdown:
+        it.Write()
+    output.Close()
 
     jetup_perc = fabs(vechissig1[0].Integral() - vechissig1ptup[0].Integral())/max(vechissig1[0].Integral(),vechissig1ptup[0].Integral())
     jetdown_perc = fabs(vechissig1[0].Integral() - vechissig1ptdown[0].Integral())/max(vechissig1[0].Integral(),vechissig1ptdown[0].Integral())
@@ -277,7 +244,7 @@ def function (lamb,ctau1,phot,statmet,statptphot):
     metup_perc = fabs(vechissig1[0].Integral() - vechissig1metup[0].Integral())/max(vechissig1[0].Integral(),vechissig1metup[0].Integral())
     metdown_perc = fabs(vechissig1[0].Integral() - vechissig1metdown[0].Integral())/max(vechissig1[0].Integral(),vechissig1metdown[0].Integral())
 
-    f = open("percentageL"+lamb+"CT"+ctau1+".txt","w")
+    f = open("percentage_1photL"+lamb+"CT"+ctau1+".txt","w")
 
     f.write("jetup: " + str(100*jetup_perc) + "\n")
     f.write("jetdown: " + str(100*jetdown_perc) + "\n")
@@ -289,85 +256,62 @@ def function (lamb,ctau1,phot,statmet,statptphot):
 
     f.close()
 
-    errorsignal = array('d',[0.])
-    errorbkg = array('d',[0.])
-    lastbinsignal = vechissig1[1].GetNbinsX();
-    lastbinbkg = vechisisolow[0].GetNbinsX();
-    integralsignal = vechissig1[1].IntegralAndError(1,lastbinsignal,errorsignal)
-    integralbkg = vechisisolow[0].IntegralAndError(1,lastbinbkg,errorbkg)
-
-    print integralbkg
-    print errorbkg[0]
-
-    f = open("statisticalsignalandbkglambda"+lamb+"ctau"+ctau1+".txt","w")
-
-    f.write("Error sig: " + str(100*(errorsignal[0]/integralsignal)) + "%" + "\n")
-    f.write("Events sig: " + str(integralsignal) + "\n")
-    f.write("Error bkg: " + str(100*(errorbkg[0]/integralbkg)) + "%" + "\n")
-    f.write("Events bkg: " + str(integralbkg) + "\n")
-
-    f.close()
-
 def main():
+    #function("180","10","500",1)
 
     # function("180","500","500",2,27,85)
-    function("180","500",2,30,85)
+    function("180","500",1,30,85)
     # function("180","500","500",2,33,85)
     # function("180","500","500",2,30,82)
     # function("180","500","500",2,30,88)
 
     # function("180","250","500",2,27,85)
-    function("180","250",2,30,85)
+    function("180","250",1,30,85)
     # function("180","250","500",2,33,85)
     # function("180","250","500",2,30,82)
     # function("180","250","500",2,30,88)
 
     # function("180","50","500",2,27,85)
-    function("180","50",2,30,85)
+    function("180","50",1,30,85)
     # function("180","50","500",2,33,85)
     # function("180","50","500",2,30,82)
     # function("180","50","500",2,30,88)
 
     # function("180","10","500",2,27,85)
-    function("180","10",2,30,85)
+    function("180","10",1,30,85)
     # function("180","10","500",2,33,85)
     # function("180","10","500",2,30,82)
     # function("180","10","500",2,30,88)
 
-    function("180","2000",2,30,85)
-
     # function("160","500","500",2,27,85)
-    function("160","500",2,30,85)
+    function("160","500",1,30,85)
     # function("160","500","500",2,33,85)
     # function("160","500","500",2,30,82)
     # function("160","500","500",2,30,88)
 
     # function("160","250","500",2,27,85)
-    #function("160","250",2,30,85)
+  # function("160","250","500",2,30,85)
     # function("160","250","500",2,33,85)
     # function("160","250","500",2,30,82)
     # function("160","250","500",2,30,88)
 
     # function("160","100","500",2,27,85)
-    function("160","100",2,30,85)
+    # function("160","100",2,30,85)
     # function("160","100","500",2,33,85)
     # function("160","100","500",2,30,82)
     # function("160","100","500",2,30,88)
 
     # function("160","50","500",2,27,85)
-    function("160","50",2,30,85)
+    function("160","50",1,30,85)
     # function("160","50","500",2,33,85)
     # function("160","50","500",2,30,82)
     # function("160","50","500",2,30,88)
 
     # function("160","10","500",2,27,85)
-    function("160","10",2,30,85)
+    function("160","10",1,30,85)
     # function("160","10","500",2,33,85)
     # function("160","10","500",2,30,82)
     # function("160","10","500",2,30,88)
-
-    function("160","1000",2,30,85)
-    function("160","2000",2,30,85)
 
 if __name__ == "__main__":
     main()

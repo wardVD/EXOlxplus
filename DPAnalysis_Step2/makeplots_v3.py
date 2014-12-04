@@ -244,8 +244,8 @@ def function (lamb,ctau1,ctau2,phot):
         vechisgpt[i].Scale(ratio)
 
     
-    vechis[4].SetBinContent(3,0.)
-    vechis[4].SetBinContent(2,0.)
+    #vechis[4].SetBinContent(3,0.)
+    #vechis[4].SetBinContent(2,0.)
 
 
     for it in vechis:

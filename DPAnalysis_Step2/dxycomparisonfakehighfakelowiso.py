@@ -53,7 +53,7 @@ def loop(vec,vechisto,flag):
     return vechisto
 
 
-def function(lamb,ctau):
+def function():
     listhigh = ["./v21_2/Run2012Afakehigh.root","./v21_2/Run2012Bfakehigh.root","./v21_2/Run2012C_1fakehigh.root","./v21_2/Run2012C_2fakehigh.root","./v21_2/Run2012C_3fakehigh.root","./v21_2/Run2012D_1fakehigh.root","./v21_2/Run2012D_2fakehigh.root","./v21_2/Run2012D_3fakehigh.root"]
     listlow = ["./v21_2/Run2012Afakelow.root","./v21_2/Run2012Bfakelow.root","./v21_2/Run2012C_1fakelow.root","./v21_2/Run2012C_2fakelow.root","./v21_2/Run2012C_3fakelow.root","./v21_2/Run2012D_1fakelow.root","./v21_2/Run2012D_2fakelow.root","./v21_2/Run2012D_3fakelow.root"]
     listiso = ["./v21_2/Run2012Aisolow.root","./v21_2/Run2012Bisolow.root","./v21_2/Run2012C_1isolow.root","./v21_2/Run2012C_2isolow.root","./v21_2/Run2012C_3isolow.root","./v21_2/Run2012D_1isolow.root","./v21_2/Run2012D_2isolow.root","./v21_2/Run2012D_3isolow.root"]
@@ -88,11 +88,11 @@ def function(lamb,ctau):
     ratioiso = dxyhigh.Integral()/dxyiso.Integral()
     """
 
-    ratiolow = dxyhigh.GetBinContent(1)/dxylow.GetBinContent(1)
-    ratioiso = dxyhigh.GetBinContent(1)/dxyiso.GetBinContent(1)
+    ratiolow = dxyiso.GetBinContent(1)/dxylow.GetBinContent(1)
+    ratiohigh = dxyiso.GetBinContent(1)/dxyhigh.GetBinContent(1)
     
     dxylow.Scale(ratiolow)
-    dxyiso.Scale(ratioiso)
+    dxyhigh.Scale(ratiohigh)
 
     dxy = [dxyhigh,dxylow,dxyiso]
 
@@ -102,7 +102,7 @@ def plot(dxy,cmslabel,sqrtlabel):
     dxy[2].SetFillStyle(3001)
     dxy[0].SetLineWidth(2)
     dxy[1].SetLineWidth(2)
-    dxy[2].SetLineColor(kViolet)
+    dxy[0].SetLineColor(kBlack)
     dxy[1].SetLineColor(kRed)
     dxy[2].SetFillColor(kOrange)
     
@@ -114,9 +114,9 @@ def plot(dxy,cmslabel,sqrtlabel):
     leg.SetTextSize(0.03)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
-    leg.AddEntry(dxy[0], "Control region 1","l")
+    leg.AddEntry(dxy[2], "Control region 1","f")
     leg.AddEntry(dxy[1], "Control region 2","l")
-    leg.AddEntry(dxy[2], "Control region 3","f")
+    leg.AddEntry(dxy[0], "Control region 3","l")
 
     dxy[1].GetXaxis().SetTitle("d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
@@ -135,7 +135,7 @@ def plot(dxy,cmslabel,sqrtlabel):
     c1.Close()
     
 def main():
-    dxy = function("180","500")
+    dxy = function()
     cmslabel = label(1)
     sqrtlabel = label(2)
     plot(dxy,cmslabel,sqrtlabel)

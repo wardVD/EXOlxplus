@@ -44,13 +44,13 @@ def loop(vec, photpt, phot):
         print 'total events ' + str(entr)
         for event in tree:
 
-            if (event.ptPhot[0] < photpt):
+            if (event.ptPhot[0] < photpt or event.ptPhot[0] > (photpt+10)):
                 continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
-            if (event.ptJet[0] < (35+3.5)):
+            if (event.ptJet[0] < 35):
                 continue
             if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
                 continue
@@ -58,7 +58,6 @@ def loop(vec, photpt, phot):
                 continue
             for ding in event.ptPhot:
                 nPhot = nPhot + 1
-
             for ding in event.dxyConv:
                 nDxy = nDxy + 1
         
@@ -131,23 +130,38 @@ def main():
     CTAU250 = function("180","250",2)
     CTAU500 = function("180","500",2)
 
+    # CTAU10 = function("160","10",2)
+    # CTAU50 = function("160","50",2)
+    # CTAU100 = function("160","100",2)
+    # CTAU500 = function("160","500",2)
+
     c1 = TCanvas("c1","c1",600,500)
     gStyle.SetOptStat(000000000)
     c1.SetBottomMargin(0.15)
     c1.SetLeftMargin(0.15)
     CTAU10.SetMarkerColor(1)
     CTAU50.SetMarkerColor(2)
-    CTAU250.SetMarkerColor(5)
+
+    CTAU250.SetMarkerColor(3)
+    # CTAU100.SetMarkerColor(5)
+
     CTAU500.SetMarkerColor(4)
     leg = TLegend(0.45,0.70,0.89,0.89)
     leg.SetFillColor(kWhite)
     leg.SetTextSize(0.038)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
+
     leg.AddEntry(CTAU10, "GMSB(180 GeV, 1 cm)","p")
     leg.AddEntry(CTAU50, "GMSB(180 GeV, 5 cm)","p")
     leg.AddEntry(CTAU250, "GMSB(180 GeV, 25 cm)","p")
     leg.AddEntry(CTAU500, "GMSB(180 GeV, 50 cm)","p")
+
+    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
+    # leg.AddEntry(CTAU50, "GMSB(160 GeV, 5 cm)","p")
+    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
+    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+
     CTAU10.Draw("P")
     CTAU10.GetYaxis().SetRangeUser(0,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
@@ -159,11 +173,13 @@ def main():
     CTAU10.Draw("Psame")
     CTAU50.Draw("Psame")
     CTAU250.Draw("Psame")
+    #CTAU100.Draw("Psame")
     CTAU500.Draw("Psame")
     leg.Draw("same")
     cmslabel.Draw("same")
     sqrtlabel.Draw("same")
     c1.SaveAs("./dxyefficiencyL180.png")
+    #c1.SaveAs("./dxyefficiencyL160.png")
 
 
 if __name__ == "__main__":
