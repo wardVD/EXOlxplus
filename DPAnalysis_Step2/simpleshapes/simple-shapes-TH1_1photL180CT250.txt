@@ -18,6 +18,6 @@ bkgstat         lnN     -         1.07
 sigmasystconv   lnN    1.19       -
 sigmasystjet    lnN    1.0017     -
 sigmasystphot   lnN    1.0023     -
-simgastat       lnN    1.51       -
+sigmastat       lnN    1.51       -
 alpha  shapeN2    -          1.   uncertainty on signal resolution. Assume the histogram is a 2 sigma shift,
 #                                so divide the unit gaussian by 2 before doing the interpolation

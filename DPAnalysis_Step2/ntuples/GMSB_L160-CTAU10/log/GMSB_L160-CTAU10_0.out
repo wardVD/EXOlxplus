@@ -1,12 +1,12 @@
-Sender: LSF System <lsfadmin@b65c7685c5.cern.ch>
-Subject: Job 595184109: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L160-CTAU10 GMSB_L160-CTAU10> in cluster batch Done
+Sender: LSF System <lsfadmin@lxbsu0642.cern.ch>
+Subject: Job 597696438: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L160-CTAU10 GMSB_L160-CTAU10> in cluster batch Done
 
-Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L160-CTAU10 GMSB_L160-CTAU10> was submitted from host <lxplus0042.cern.ch> by user <wvandrie> in cluster <batch>.
-Job was executed on host(s) <b65c7685c5.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
+Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/GMSB_L160-CTAU10 GMSB_L160-CTAU10> was submitted from host <lxplus0034.cern.ch> by user <wvandrie> in cluster <batch>.
+Job was executed on host(s) <lxbsu0642.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
 </afs/cern.ch/user/w/wvandrie> was used as the home directory.
 </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
-Started at Tue Nov 25 19:06:33 2014
-Results reported at Tue Nov 25 20:04:02 2014
+Started at Tue Dec  2 16:48:40 2014
+Results reported at Tue Dec  2 17:26:34 2014
 
 Your job looked like:
 
@@ -20,17 +20,17 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time   :   3282.31 sec.
-    Max Memory :        70 MB
-    Max Swap   :       867 MB
+    CPU time   :   2166.82 sec.
+    Max Memory :       187 MB
+    Max Swap   :      1153 MB
 
-    Max Processes  :         8
-    Max Threads    :         9
+    Max Processes  :        10
+    Max Threads    :        11
 
 The output (if any) follows:
 
 @(#)CERN job starter $Date: 2010/06/23 14:22:16 $
-Working directory is </pool/lsf/wvandrie/595184109> on <>
+Working directory is </pool/lsf/wvandrie/597696438> on <>
 
 Reading list : list/GMSB_L160-CTAU10 .......
 Adding following files to the chain
@@ -134,11 +134,11 @@ Processing event 940000
 Processing event 950000
 Processing event 960000
 
-Job finished at Tue Nov 25 20:03:27 CET 2014 on node 
+Job finished at Tue Dec  2 17:26:00 CET 2014 on node 
  under linux version Scientific Linux CERN SLC release 6.6 (Carbon)
 
-CERN statistics: This process used approximately : 1:35:01 KSI2K hours (5701 KSI2K seconds)
-                 This process corresponds to     : 6:10:33 HS06  hours (22233 HS06  seconds)
+CERN statistics: This process used approximately : 1:52:18 KSI2K hours (6738 KSI2K seconds)
+                 This process corresponds to     : 7:18:01 HS06  hours (26281 HS06  seconds)
 
 
 PS:

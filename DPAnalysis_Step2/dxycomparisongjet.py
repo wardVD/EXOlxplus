@@ -1,4 +1,3 @@
-
 from ROOT import *
 from array import array
 from math import fabs, sqrt
@@ -42,6 +41,10 @@ def loop(vec,vechisto,flag):
         entr = tree.GetEntries()
         print 'total events ' + str(entr)
         for event in tree:
+            if (event.nPhot < 1):
+                continue
+            if (event.nJet < 2):
+                continue
             if(flag == 0):
                 lum = 19300.
                 for i in range(len(event.dxyConv)):
@@ -54,7 +57,7 @@ def loop(vec,vechisto,flag):
 
 
 def function():
-    listgjet = ["./v21/G_Pt-50to80.root","./v21/G_Pt-80to120.root","./v21/G_Pt-120to170.root","./v21/G_Pt-170to300.root","./v21/G_Pt-300to470.root","./v21/G_Pt-470to800.root"]
+    listgjet = ["./v21/G_Pt-50to80loose.root","./v21/G_Pt-80to120loose.root","./v21/G_Pt-120to170loose.root","./v21/G_Pt-170to300loose.root","./v21/G_Pt-300to470loose.root","./v21/G_Pt-470to800loose.root"]
     listgjetlowmet = ["./v21/G_Pt-50to80_lowmet.root","./v21/G_Pt-80to120_lowmet.root","./v21/G_Pt-120to170_lowmet.root","./v21/G_Pt-170to300_lowmet.root","./v21/G_Pt-300to470_lowmet.root","./v21/G_Pt-470to800_lowmet.root"]
 
     vecfilesgjet = []
@@ -66,10 +69,13 @@ def function():
         temp = TFile.Open(item)
         vecfilesgjetlowmet.append(temp)
 
-    xbins = array('d',[0.,0.3, 1., 3., 6.])
+    #xbins = array('d',[0.,0.1,0.2,0.6,2.5])
+    xbins = array('d',[0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,2.5])
 
-    dxygjet = TH1D("dXYgjet","",4,xbins)
-    dxygjetlowmet = TH1D("dXYgjetlowmet","",4,xbins)
+    dxygjet = TH1D("dXYgjet","",9,xbins)
+    dxygjetlowmet = TH1D("dXYgjetlowmet","",9,xbins)
+    #dxygjet = TH1D("dXYgjet","",25,0,2.5)
+    #dxygjetlowmet = TH1D("dXYgjetlowmet","",25,0,2.5)
     dxygjet.Sumw2()
     dxygjetlowmet.Sumw2()
 
@@ -125,6 +131,7 @@ def plot(dxy,cmslabel,sqrtlabel):
 
     dxy[1].GetXaxis().SetTitle("d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
+    #dxy[1].GetYaxis().SetRangeUser(1,1000)
     
     dxy[1].Draw("HIST")
     dxy[0].Draw("EsameHIST")
