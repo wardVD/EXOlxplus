@@ -22,7 +22,7 @@ void rootlogon();
 
 
 TString savedir = "./img_fit/";
-TString extra = "";
+TString extra = "1phot";
 
 TFile* file_CT10L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau10shapedata"+extra+".Asymptotic.mH120.root"), "READ");
 TFile* file_CT50L180 = new TFile(("./exclusionfiles/higgsCombineL180CTau50shapedata"+extra+".Asymptotic.mH120.root"), "READ");

@@ -108,8 +108,8 @@ def function (lamb,ctau1,ctau2,phot):
     listttjets = ["./v21/TTJets.root"]
     listsig1 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
     listsig2 = ["./v22/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v22/Run2012A.root","./v22/Run2012B.root","./v22/Run2012C_1.root","./v22/Run2012C_2.root","./v22/Run2012C_3.root","./v22/Run2012D_1.root","./v22/Run2012D_2.root","./v22/Run2012D_3.root"]
-    listdataisolow = ["./v22/Run2012Aisolow.root","./v22/Run2012Bisolow.root","./v22/Run2012C_1isolow.root","./v22/Run2012C_2isolow.root","./v22/Run2012C_3isolow.root","./v22/Run2012D_1isolow.root","./v22/Run2012D_2isolow.root","./v22/Run2012D_3isolow.root"]
+    listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
+    listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
     listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
     listfakelow = ["./v21/Run2012Afakelow.root","./v21/Run2012Bfakelow.root","./v21/Run2012C_1fakelow.root","./v21/Run2012C_2fakelow.root","./v21/Run2012C_3fakelow.root","./v21/Run2012D_1fakelow.root","./v21/Run2012D_2fakelow.root","./v21/Run2012D_3fakelow.root"]
     

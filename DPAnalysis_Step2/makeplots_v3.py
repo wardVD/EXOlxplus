@@ -127,6 +127,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisogpt = TH1D("photIsoGPT","",50,0,5)
     phohoveregpt = TH1D("phoHoverEGPT","",50,0,5)
     vechisgpt = [ptpholeadgpt,ptphosubleadgpt,ptjetleadgpt,ptjetsubleadgpt,dxygpt,metgpt,njetsgpt,nphotgpt,nvertgpt,smajgpt,smingpt,sigietagpt,etagpt,chadisogpt,nhadisogpt,photisogpt,phohoveregpt]
+
+    for each in vechisgpt:
+        each.Sumw2()
+
     vechisgpt = loop(vecfilesgpt, vechisgpt, 0, phot)
 
     ptpholeadqcd = TH1D("PtPhotonleadingQCD","",24,0,500)
@@ -147,6 +151,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisoqcd = TH1D("photIsoQCD","",50,0,5)
     phohovereqcd = TH1D("phoHoverEQCD","",50,0,5)
     vechisqcd = [ptpholeadqcd,ptphosubleadqcd,ptjetleadqcd,ptjetsubleadqcd,dxyqcd,metqcd,njetsqcd,nphotqcd,nvertqcd,smajqcd,sminqcd,sigietaqcd,etaqcd,chadisoqcd,nhadisoqcd,photisoqcd,phohovereqcd]
+
+    for each in vechisqcd:
+        each.Sumw2()
+    
     vechisqcd = loop(vecfilesqcd, vechisqcd, 0, phot)
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
@@ -167,6 +175,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisottjet = TH1D("photIsoTTJet","",50,0,5)
     phohoverettjet = TH1D("phoHoverETTJet","",50,0,5)
     vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet]
+
+    for each in vechisttjet:
+        each.Sumw2()
+
     vechisttjet = loop(vecfilesttjets, vechisttjet, 0, phot)
 
     ptpholeadsig1 = TH1D("PtPhotonleadingSignal1","",24,0,500)
@@ -187,6 +199,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisosig1 = TH1D("photIsoSignal1","",50,0,5)
     phohoveresig1 = TH1D("phoHoverESignal1","",50,0,5)
     vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1]
+
+    for each in vechissig1:
+        each.Sumw2()
+
     vechissig1 = loop(vecfilessig1, vechissig1, 0, phot)
 
     ptpholeadsig2 = TH1D("PtPhotonleadingSignal2","",24,0,500)
@@ -207,6 +223,10 @@ def function (lamb,ctau1,ctau2,phot):
     photisosig2 = TH1D("photIsoSignal2","",50,0,5)
     phohoveresig2 = TH1D("phoHoverESignal2","",50,0,5)
     vechissig2 = [ptpholeadsig2,ptphosubleadsig2,ptjetleadsig2,ptjetsubleadsig2,dxysig2,metsig2,njetssig2,nphotsig2,nvertsig2,smajsig2,sminsig2,sigietasig2,etasig2,chadisosig2,nhadisosig2,photisosig2,phohoveresig2]
+
+    for each in vechissig2:
+        each.Sumw2()
+
     vechissig2 = loop(vecfilessig2, vechissig2, 0, phot)
 
     ptpholead = TH1D("PtPhotonleading","",24,0,500)
@@ -227,6 +247,10 @@ def function (lamb,ctau1,ctau2,phot):
     photiso = TH1D("photIso","",50,0,5)
     phohovere = TH1D("phoHoverE","",50,0,5)
     vechis = [ptpholead,ptphosublead,ptjetlead,ptjetsublead,dxy,met,njets,nphot,nvert,smaj,smin,sigieta,eta,chadiso,nhadiso,photiso,phohovere]
+    
+    for each in vechis:
+        each.Sumw2()
+
     vechis = loop(vecfilesdata, vechis, 1, phot)
             
     output = TFile.Open("./ctau"+ctau1+"andctau"+ctau2+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
@@ -244,9 +268,10 @@ def function (lamb,ctau1,ctau2,phot):
         vechisgpt[i].Scale(ratio)
 
     
-    #vechis[4].SetBinContent(3,0.)
-    #vechis[4].SetBinContent(2,0.)
-
+    vechis[4].SetBinContent(3,0.)
+    vechis[4].SetBinContent(2,0.)
+    vechis[4].SetBinContent(4,0.)
+    vechis[4].SetBinContent(1,0.)
 
     for it in vechis:
         it.Write()

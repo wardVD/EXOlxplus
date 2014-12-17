@@ -92,9 +92,10 @@ def function (lamb,ctau,phot):
     background = TH1F("background","",4,xbins)
     background = loop(vecfilesdataisolow, background, 2, phot)
     background_alphaUp = TH1F("background_alphaUp","",4,xbins)
-    background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
+    #background_alphaUp = loop(vecfilesfakehigh,background_alphaUp, 2, phot)
 
-    #background_alphaUp = loop(vecfilesfakelow,background_alphaUp, 2, phot)                                                                                                                                                                     #background_alphaUp = background.Clone("background_alphaUp")
+    background_alphaUp = loop(vecfilesfakelow,background_alphaUp, 2, phot)
+    #background_alphaUp = background.Clone("background_alphaUp")
     background_alphaDown = background.Clone("background_alphaDown")
 
 
@@ -150,15 +151,18 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    # function("180","10",1)
-    # function("180","50",1)
-    # function("180","250",1)
-    # function("180","500",1)
+    function("180","10",1)
+    function("180","50",1)
+    function("180","250",1)
+    function("180","500",1)
+    # function("180","2000",1)
 
-    function("160","10",1)
-    function("160","50",1)
-    function("160","100",1)
-    function("160","500",1)
+    #function("160","10",1)
+    #function("160","50",1)
+    #function("160","100",1)
+    #function("160","500",1)
+    # function("160","1000",1)
+    # function("160","2000",1)
 
 if __name__ == "__main__":
     main()

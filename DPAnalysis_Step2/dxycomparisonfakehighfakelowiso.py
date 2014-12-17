@@ -1,40 +1,10 @@
-
 from ROOT import *
 from array import array
 from math import fabs, sqrt
-from tdrStyle import *
+import CMS_lumi, tdrstyle
 
-setTDRStyle()
-
-def label(quadrant):
-    if (quadrant!=1 and quadrant !=2):
-        print "This quadrant is not defined, choose a value of 1 or 2!"
-    else:
-        if (quadrant == 1):
-            x1 = 0.1
-            x2 = 0.28
-            y1 = 0.95
-            y2 = 1.0
-        if (quadrant == 2):
-            x1 = 0.75
-            x2 = 0.93
-            y1 = 0.95
-            y2 = 1.0
-            
-    headlabel = TPaveText( x1, y1, x2, y2, "brNDC" )
-    if (quadrant == 1):
-        headlabel.AddText("CMS = 19.3 fb^{-1}")
-    if (quadrant == 2):
-        headlabel.AddText("#sqrt{s} = 8 TeV")
-
-    headlabel.SetFillColor(kWhite)
-    headlabel.SetTextSize(0.04)
-    headlabel.SetTextFont(42)
-    headlabel.SetBorderSize(0)
-    headlabel.SetShadowColor(kWhite)
-    
-    return headlabel
-
+#set the tdr style                                                                                                                                                                                                                             
+tdrstyle.setTDRStyle()
 
 def loop(vec,vechisto,flag):
     for i in vec:
@@ -98,7 +68,7 @@ def function():
 
     return dxy
 
-def plot(dxy,cmslabel,sqrtlabel):
+def plot(dxy):
     dxy[2].SetFillStyle(3001)
     dxy[0].SetLineWidth(2)
     dxy[1].SetLineWidth(2)
@@ -106,9 +76,6 @@ def plot(dxy,cmslabel,sqrtlabel):
     dxy[1].SetLineColor(kRed)
     dxy[2].SetFillColor(kOrange)
     
-
-    c1 = TCanvas("c1","c1",600,500)
-    c1.SetLogy()
     leg = TLegend(0.65,0.75,0.89,0.89)
     leg.SetFillColor(kWhite)
     leg.SetTextSize(0.03)
@@ -118,27 +85,79 @@ def plot(dxy,cmslabel,sqrtlabel):
     leg.AddEntry(dxy[1], "Control region 2","l")
     leg.AddEntry(dxy[0], "Control region 3","l")
 
-    dxy[1].GetXaxis().SetTitle("d_{XY} (cm)")
+    dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
-    
+    dxy[1].GetYaxis().SetRangeUser(1,10000)
+    dxy[1].GetYaxis().SetTitleSize(0.05)
+    dxy[1].GetXaxis().SetTitleSize(0.05)
+
+    gStyle.SetOptStat(0)
+
+    #change the CMS_lumi variables (see CMS_lumi.py)
+
+    CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.writeExtraText = 1
+    CMS_lumi.extraText = "Simulation"
+
+    iPos = 11
+    if( iPos==0 ): CMS_lumi.relPosX = 0.12
+
+    H_ref = 600;
+    W_ref = 800;
+    W = W_ref
+    H  = H_ref
+
+    #
+    # Simple example of macro: plot with CMS name and lumi text
+    #  (this script does not pretend to work in all configurations)
+    # iPeriod = 1*(0/1 7 TeV) + 2*(0/1 8 TeV)  + 4*(0/1 13 TeV)                                                                                                                                                                                
+    # For instance:
+    #               iPeriod = 3 means: 7 TeV + 8 TeV
+    #               iPeriod = 7 means: 7 TeV + 8 TeV + 13 TeV
+    # references for T, B, L, R
+
+    T = 0.08*H_ref
+    B = 0.12*H_ref
+    L = 0.12*W_ref
+    R = 0.04*W_ref
+
+    canvas = TCanvas("c2","c2",50,50,W,H)
+    canvas.SetFillColor(0)
+    canvas.SetBorderMode(0)
+    canvas.SetFrameFillStyle(0)
+    canvas.SetFrameBorderMode(0)
+    canvas.SetLeftMargin( L/W )
+    canvas.SetRightMargin( R/W )
+    canvas.SetTopMargin( T/H )
+    canvas.SetBottomMargin( B/H )
+    canvas.SetTickx(0)
+    canvas.SetTicky(0)
+    canvas.SetLogy()
+
     dxy[1].Draw("")
     dxy[0].Draw("same")
     dxy[2].Draw("same")
     dxy[1].Draw("same")
     dxy[0].Draw("same")
-    cmslabel.Draw("same")
-    sqrtlabel.Draw("same")
     leg.Draw("same")
-    c1.RedrawAxis()
 
-    c1.SaveAs("dxycomparisonfakehighfakelowisolow.png")
-    c1.Close()
+
+    #draw the lumi text on the canvas
+    CMS_lumi.CMS_lumi(canvas, 2, iPos)
+
+    canvas.cd()
+    canvas.Update()
+    canvas.RedrawAxis()
+    frame = canvas.GetFrame()
+    frame.Draw()
+    
+    canvas.SaveAs("dxycomparisonfakehighfakelowisolow.png")
+    canvas.Close()
     
 def main():
     dxy = function()
-    cmslabel = label(1)
-    sqrtlabel = label(2)
-    plot(dxy,cmslabel,sqrtlabel)
+    plot(dxy)
 
 if __name__ == "__main__":
     main()

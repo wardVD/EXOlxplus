@@ -26,15 +26,15 @@ def Draw(vec):
     leg.AddEntry(vec[0], "TTJets","f")
     leg.AddEntry(vec[1], "GMSB(180 GeV, 50 cm)","f")
     vec[0].Draw("")
-    vec[0].GetXaxis().SetTitle("Photon Matched to Electron")
-    #vec[0].GetXaxis().SetTitle("Conversion Matched to Electron")
-    vec[0].GetYaxis().SetTitle("Number of Events (A.U.)")
+    #vec[0].GetXaxis().SetTitle("Photon Matched to Electron")
+    vec[0].GetXaxis().SetTitle("Conversion Matched to Electron")
+    vec[0].GetYaxis().SetTitle("(A.U.)")
     vec[0].GetYaxis().SetRangeUser(0,1.2)
     vec[1].Draw("same")
     leg.Draw("same")
     
-    c1.SaveAs("phomatchedele.png")
-    #c1.SaveAs("convmatchedele.png")
+    #c1.SaveAs("phomatchedele.png")
+    c1.SaveAs("convmatchedele.png")
     c1.Close()
     
 def function():
@@ -47,10 +47,10 @@ def function():
     h2 = TH1F("h2","",2,-0.5,1.5)
     h1.SetNdivisions(2)
     h2.SetNdivisions(2)
-    tree1.Draw("phoMatchedEle>>h1")
-    tree2.Draw("phoMatchedEle>>h2")
-    #tree1.Draw("convMatchedEle>>h1")
-    #tree2.Draw("convMatchedEle>>h2")
+    #tree1.Draw("phoMatchedEle>>h1")
+    #tree2.Draw("phoMatchedEle>>h2")
+    tree1.Draw("convMatchedEle>>h1")
+    tree2.Draw("convMatchedEle>>h2")
     vec = [h1,h2]
     
     Draw(vec)

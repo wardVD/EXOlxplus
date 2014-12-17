@@ -1,36 +1,11 @@
 from ROOT import *
 from array import array
 from math import fabs, sqrt
+import CMS_lumi, tdrstyle
 
-#label function                                                                                                                                                                                                                                
-def label(quadrant):
-    if (quadrant!=1 and quadrant !=2):
-        print "This quadrant is not defined, choose a value of 1 or 2!"
-    else:
-        if (quadrant == 1):
-            x1 = 0.19
-            x2 = 0.37
-            y1 = 0.92
-            y2 = 0.97
-        if (quadrant == 2):
-            x1 = 0.73
-            x2 = 0.91
-            y1 = 0.92
-            y2 = 0.97
+#set the tdr style                                                                                                                                                                                                                             
+tdrstyle.setTDRStyle()
 
-    headlabel = TPaveText( x1, y1, x2, y2, "brNDC" )
-    if (quadrant == 1):
-        headlabel.AddText("CMS = 19.3 fb^{-1}")
-    if (quadrant == 2):
-        headlabel.AddText("#sqrt{s} = 8 TeV")
-
-    headlabel.SetFillColor(kWhite)
-    headlabel.SetTextSize(0.04)
-    headlabel.SetTextFont(42)
-    headlabel.SetBorderSize(0)
-    headlabel.SetShadowColor(kWhite)
-
-    return headlabel
 
 def loop(vec, photpt, phot):
 
@@ -123,64 +98,111 @@ def function (lamb,ctau,phot):
     return EfficiencyHist
 
 def main():
-    cmslabel = label(1)
-    sqrtlabel = label(2)
-    CTAU10 = function("180","10",2)
-    CTAU50 = function("180","50",2)
-    CTAU250 = function("180","250",2)
-    CTAU500 = function("180","500",2)
+    # CTAU10 = function("180","10",2)
+    # CTAU50 = function("180","50",2)
+    # CTAU250 = function("180","250",2)
+    # CTAU500 = function("180","500",2)
 
-    # CTAU10 = function("160","10",2)
-    # CTAU50 = function("160","50",2)
-    # CTAU100 = function("160","100",2)
-    # CTAU500 = function("160","500",2)
+    CTAU10 = function("160","10",2)
+    CTAU50 = function("160","50",2)
+    CTAU100 = function("160","100",2)
+    CTAU500 = function("160","500",2)
 
-    c1 = TCanvas("c1","c1",600,500)
-    gStyle.SetOptStat(000000000)
-    c1.SetBottomMargin(0.15)
-    c1.SetLeftMargin(0.15)
     CTAU10.SetMarkerColor(1)
     CTAU50.SetMarkerColor(2)
-
-    CTAU250.SetMarkerColor(3)
-    # CTAU100.SetMarkerColor(5)
-
+    #CTAU250.SetMarkerColor(3)
+    CTAU100.SetMarkerColor(5)
     CTAU500.SetMarkerColor(4)
-    leg = TLegend(0.45,0.70,0.89,0.89)
+
+
+    leg = TLegend(0.55,0.70,0.94,0.89)
     leg.SetFillColor(kWhite)
     leg.SetTextSize(0.038)
     leg.SetTextFont(42)
     leg.SetBorderSize(0)
 
-    leg.AddEntry(CTAU10, "GMSB(180 GeV, 1 cm)","p")
-    leg.AddEntry(CTAU50, "GMSB(180 GeV, 5 cm)","p")
-    leg.AddEntry(CTAU250, "GMSB(180 GeV, 25 cm)","p")
-    leg.AddEntry(CTAU500, "GMSB(180 GeV, 50 cm)","p")
+    # leg.AddEntry(CTAU10, "GMSB(180 TeV, 1 cm)","p")
+    # leg.AddEntry(CTAU50, "GMSB(180 TeV, 5 cm)","p")
+    # leg.AddEntry(CTAU250, "GMSB(180 TeV, 25 cm)","p")
+    # leg.AddEntry(CTAU500, "GMSB(180 TeV, 50 cm)","p")
 
-    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
-    # leg.AddEntry(CTAU50, "GMSB(160 GeV, 5 cm)","p")
-    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
-    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+    leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
+    leg.AddEntry(CTAU50, "GMSB(160 GeV, 5 cm)","p")
+    leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
+    leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
 
-    CTAU10.Draw("P")
+
     CTAU10.GetYaxis().SetRangeUser(0,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
-    CTAU10.GetYaxis().SetTitleOffset(1.4)
+    CTAU10.GetYaxis().SetTitleOffset(1.2)
     CTAU10.GetYaxis().SetTitle("Conversion Reconstruction Efficiency")
     CTAU10.GetXaxis().SetTitle("Photon p_{T} (GeV)")
     CTAU10.GetXaxis().SetTitleSize(0.05)
     CTAU10.GetXaxis().SetTitleOffset(1.)
-    CTAU10.Draw("Psame")
+
+
+    gStyle.SetOptStat(0)
+
+    #change the CMS_lumi variables (see CMS_lumi.py)
+
+    CMS_lumi.lumi_7TeV = "4.8 fb^{-1}"
+    CMS_lumi.lumi_8TeV = "19.3 fb^{-1}"
+    CMS_lumi.writeExtraText = 1
+    CMS_lumi.extraText = "Simulation"
+
+    iPos = 11
+    if( iPos==0 ): CMS_lumi.relPosX = 0.12
+
+    H_ref = 600;
+    W_ref = 800;
+    W = W_ref
+    H  = H_ref
+
+    # Simple example of macro: plot with CMS name and lumi text
+    #  (this script does not pretend to work in all configurations)
+    # iPeriod = 1*(0/1 7 TeV) + 2*(0/1 8 TeV)  + 4*(0/1 13 TeV)
+    # For instance:
+    #               iPeriod = 3 means: 7 TeV + 8 TeV
+    #               iPeriod = 7 means: 7 TeV + 8 TeV + 13 TeV
+    # references for T, B, L, R
+
+    T = 0.08*H_ref
+    B = 0.12*H_ref
+    L = 0.12*W_ref
+    R = 0.04*W_ref
+
+    canvas = TCanvas("c2","c2",50,50,W,H)
+    canvas.SetFillColor(0)
+    canvas.SetBorderMode(0)
+    canvas.SetFrameFillStyle(0)
+    canvas.SetFrameBorderMode(0)
+    canvas.SetLeftMargin( L/W )
+    canvas.SetRightMargin( R/W )
+    canvas.SetTopMargin( T/H )
+    canvas.SetBottomMargin( B/H )
+    canvas.SetTickx(0)
+    canvas.SetTicky(0)
+
+
+    CTAU10.Draw("P")
     CTAU50.Draw("Psame")
-    CTAU250.Draw("Psame")
-    #CTAU100.Draw("Psame")
+    #CTAU250.Draw("Psame")
+    CTAU100.Draw("Psame")
     CTAU500.Draw("Psame")
     leg.Draw("same")
-    cmslabel.Draw("same")
-    sqrtlabel.Draw("same")
-    c1.SaveAs("./dxyefficiencyL180.png")
-    #c1.SaveAs("./dxyefficiencyL160.png")
 
+
+    #draw the lumi text on the canvas
+    CMS_lumi.CMS_lumi(canvas, 2, iPos)
+
+    canvas.cd()
+    canvas.Update()
+    canvas.RedrawAxis()
+    frame = canvas.GetFrame()
+    frame.Draw()
+  
+    #canvas.SaveAs("./dxyefficiencyL180.png")
+    canvas.SaveAs("./dxyefficiencyL160.png")
 
 if __name__ == "__main__":
     main()
