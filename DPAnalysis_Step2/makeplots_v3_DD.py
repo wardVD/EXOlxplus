@@ -369,9 +369,10 @@ def function (lamb,ctau1,ctau2,phot):
     vechisfakelow[4].Scale(ratiofakelow)
     vechisfakehigh[4].Scale(ratiofakehigh)
 
-    """
+    
     vechis[4].SetBinContent(3,0.)
     vechis[4].SetBinContent(2,0.)
+    """
     vechissig[4].SetBinContent(1,0.)
     vechissig[4].SetBinContent(2,0.)
     vechisttjet[4].SetBinContent(1,0.)

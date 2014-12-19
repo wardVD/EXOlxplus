@@ -219,6 +219,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("PUScaleFactors", &PUScaleFactors, "PUScaleFactors/F");
   anaTree->Branch("convMatched", &convMatched, "convMatched/F");
   anaTree->Branch("phoMatched", &phoMatched, "phoMatched/F");
+  anaTree->Branch("phoMatched2", &phoMatched2, "phoMatched2/F");
   anaTree->Branch("phohovere", &phohovere);
   anaTree->Branch("chadiso", &chadiso);
   anaTree->Branch("nhadiso", &nhadiso);
@@ -259,8 +260,6 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     else MC = 1;
     
     if (!(triggered == 1 || triggered == 3)) continue;
-
-    if (phoMatchedEle2 > 0) continue;
 
     int entries = getsumcounterzero(outname); 
 
@@ -426,7 +425,11 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       */
 
       if (phoMatchedEle[i] > 0) continue;
-       
+      if (phoMatchedEle2[i] > 0) {
+	std::cout << "HIT" << std::endl;
+	continue;
+      }
+
       if ( photpt ) ptPhot.push_back(phoP4.Pt());
       if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
       if ( photptdown ) ptPhotDown.push_back(phoP4down.Pt());

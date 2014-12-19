@@ -56,6 +56,7 @@ private:
     std::vector<double> ConvChi2;
     std::vector<double> convMatched;
     std::vector<double> phoMatched;
+    std::vector<double> phoMatched2;
     std::vector<double> phohovere;
     std::vector<double> chadiso;
     std::vector<double> nhadiso;
