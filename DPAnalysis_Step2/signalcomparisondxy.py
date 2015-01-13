@@ -59,6 +59,8 @@ def plot(dxy):
     
     
     dxy[0].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
+    dxy[0].GetXaxis().SetTitleSize(0.05)
+    dxy[0].GetYaxis().SetTitleSize(0.05)
     dxy[0].GetYaxis().SetTitle("Events")
 
     gStyle.SetOptStat(0)

@@ -5,13 +5,13 @@ kmax *
 shapes * * simple-shapes-TH1.root $PROCESS $PROCESS_$SYSTEMATIC
 ---------------
 bin 1
-observation 43
+observation 50
 
 ------------------------------
 bin             1          1
 process         signal     background
 process         0          1
-rate            6.168      39.5
+rate            6.168      49.14
 --------------------------------
 lumi       lnN    1.022       -
 bgnorm     lnN     -         1.30

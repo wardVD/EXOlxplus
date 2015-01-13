@@ -10,9 +10,7 @@ def loop(vec, vechisto, flag, phot):
         j=0
         print 'total events ' + str(entr)
         for event in tree:
-            #if (event.nPhot < phot):
-                #continue
-            if (len(event.ptJet) < 1 or len(event.ptPhot) < 1):
+            if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
                 continue
@@ -24,6 +22,10 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.sMajPhot[0] > 1.35):
                 continue
+            if (event.MET < 30):
+                continue
+            #if (len(event.ptJet) < 2):
+            #    continue
             
             if(flag == 0):
                 lum = 19280.
@@ -45,7 +47,7 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[10].Fill( event.sMinPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[11].Fill( event.sigmaIetaPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[12].Fill( event.etaPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-                vechisto[13].Fill( event.chadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))                
+                vechisto[13].Fill( event.chadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[14].Fill( event.nhadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
@@ -76,10 +78,10 @@ def loop(vec, vechisto, flag, phot):
 
 def function (lamb,ctau,phot):
 
-    listgpt = ["./v21n-1/G_Pt-50to80.root","./v21n-1/G_Pt-80to120.root","./v21n-1/G_Pt-120to170.root","./v21n-1/G_Pt-170to300.root","./v21n-1/G_Pt-300to470.root","./v21n-1/G_Pt-470to800.root"]
-    listqcd = ["./v21n-1/QCD_Pt-80to120.root","./v21n-1/QCD_Pt-120to170.root","./v21n-1/QCD_Pt-170to300.root","./v21n-1/QCD_Pt-470to600.root","./v21n-1/QCD_Pt-600to800.root","./v21n-1/QCD_Pt-800to1000.root","./v21n-1/QCD_Pt-1000to1400.root"]
-    listttjets = ["./v21n-1/TTJets.root"]
-    listsig = ["./v21n-1/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listgpt = ["./v24n-1/G_Pt-50to80.root","./v24n-1/G_Pt-80to120.root","./v24n-1/G_Pt-120to170.root","./v24n-1/G_Pt-170to300.root","./v24n-1/G_Pt-300to470.root","./v24n-1/G_Pt-470to800.root"]
+    listqcd = ["./v24n-1/QCD_Pt-80to120.root","./v24n-1/QCD_Pt-120to170.root","./v24n-1/QCD_Pt-170to300.root","./v24n-1/QCD_Pt-470to600.root","./v24n-1/QCD_Pt-600to800.root","./v24n-1/QCD_Pt-800to1000.root","./v24n-1/QCD_Pt-1000to1400.root"]
+    listttjets = ["./v24n-1/TTJets.root"]
+    listsig = ["./v24n-1/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
     
     vecfilesgpt = []
     for item in listgpt:
@@ -103,7 +105,7 @@ def function (lamb,ctau,phot):
 
     ptpholeadgpt = TH1D("PtPhotonleadingGPT","",24,0,500)
     ptphosubleadgpt = TH1D("PtPhotonsubleadingGPT","",12,0,500)
-    ptjetleadgpt = TH1D("PtJetleadingGPT","",20,0,300)
+    ptjetleadgpt = TH1D("PtJetleadingGPT","",40,0,300)
     ptjetsubleadgpt = TH1D("PtJetsubleadingGPT","",12,0,500)
     dxygpt = TH1D("DxyGPT","",4,xbins)
     metgpt = TH1D("METGPT","",50,0,500)
@@ -119,11 +121,16 @@ def function (lamb,ctau,phot):
     photisogpt = TH1D("photIsoGPT","",50,0,5)
     phohoveregpt = TH1D("phoHoverEGPT","",50,0,0.1)
     vechisgpt = [ptpholeadgpt,ptphosubleadgpt,ptjetleadgpt,ptjetsubleadgpt,dxygpt,metgpt,njetsgpt,nphotgpt,nvertgpt,smajgpt,smingpt,sigietagpt,etagpt,chadisogpt,nhadisogpt,photisogpt,phohoveregpt]
+
+    for each in vechisgpt:
+        each.Sumw2()
+
     vechisgpt = loop(vecfilesgpt, vechisgpt, 0, phot)
+
 
     ptpholeadqcd = TH1D("PtPhotonleadingQCD","",24,0,500)
     ptphosubleadqcd = TH1D("PtPhotonsubleadingQCD","",12,0,500)
-    ptjetleadqcd = TH1D("PtJetleadingQCD","",20,0,300)
+    ptjetleadqcd = TH1D("PtJetleadingQCD","",40,0,300)
     ptjetsubleadqcd = TH1D("PtJetsubleadingQCD","",12,0,500)
     dxyqcd = TH1D("DxyQCD","",4,xbins)
     metqcd = TH1D("METQCD","",50,0,500)
@@ -139,11 +146,15 @@ def function (lamb,ctau,phot):
     photisoqcd = TH1D("photIsoQCD","",50,0,5)
     phohovereqcd = TH1D("phoHoverEQCD","",50,0,0.1)
     vechisqcd = [ptpholeadqcd,ptphosubleadqcd,ptjetleadqcd,ptjetsubleadqcd,dxyqcd,metqcd,njetsqcd,nphotqcd,nvertqcd,smajqcd,sminqcd,sigietaqcd,etaqcd,chadisoqcd,nhadisoqcd,photisoqcd,phohovereqcd]
+
+    for each in vechisqcd:
+        each.Sumw2()
+
     vechisqcd = loop(vecfilesqcd, vechisqcd, 0, phot)
 
     ptpholeadttjet = TH1D("PtPhotonleadingTTJet","",24,0,500)
     ptphosubleadttjet = TH1D("PtPhotonsubleadingTTJet","",12,0,500)
-    ptjetleadttjet = TH1D("PtJetleadingTTJet","",20,0,300)
+    ptjetleadttjet = TH1D("PtJetleadingTTJet","",40,0,300)
     ptjetsubleadttjet = TH1D("PtJetsubleadingTTJet","",12,0,500)
     dxyttjet = TH1D("DxyTTJet","",4,xbins)
     metttjet = TH1D("METTTJet","",50,0,500)
@@ -159,11 +170,15 @@ def function (lamb,ctau,phot):
     photisottjet = TH1D("photIsoTTJet","",50,0,5)
     phohoverettjet = TH1D("phoHoverETTJet","",50,0,0.1)
     vechisttjet = [ptpholeadttjet,ptphosubleadttjet,ptjetleadttjet,ptjetsubleadttjet,dxyttjet,metttjet,njetsttjet,nphotttjet,nvertttjet,smajttjet,sminttjet,sigietattjet,etattjet,chadisottjet,nhadisottjet,photisottjet,phohoverettjet]
+
+    for each in vechisttjet:
+        each.Sumw2()
+
     vechisttjet = loop(vecfilesttjets, vechisttjet, 0, phot)
 
     ptpholeadsig1 = TH1D("PtPhotonleadingSignal1","",24,0,500)
     ptphosubleadsig1 = TH1D("PtPhotonsubleadingSignal1","",12,0,500)
-    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",20,0,300)
+    ptjetleadsig1 = TH1D("PtJetleadingSignal1","",40,0,300)
     ptjetsubleadsig1 = TH1D("PtJetsubleadingSignal1","",12,0,500)
     dxysig1 = TH1D("DxySignal1","",4,xbins)
     metsig1 = TH1D("METSignal1","",50,0,500)
@@ -179,40 +194,46 @@ def function (lamb,ctau,phot):
     photisosig1 = TH1D("photIsoSignal1","",50,0,5)
     phohoveresig1 = TH1D("phoHoverESignal1","",50,0,0.1)
     vechissig1 = [ptpholeadsig1,ptphosubleadsig1,ptjetleadsig1,ptjetsubleadsig1,dxysig1,metsig1,njetssig1,nphotsig1,nvertsig1,smajsig1,sminsig1,sigietasig1,etasig1,chadisosig1,nhadisosig1,photisosig1,phohoveresig1]
+
+    for each in vechissig1:
+        each.Sumw2()
+
     vechissig1 = loop(vecfilessig1, vechissig1, 0, phot)
             
     output = TFile.Open("./ctau"+ctau+"lambda"+lamb+"/output"+str(phot)+".root","recreate")
 
-    for i in range(len(vechissig1)):
-        ttjettotal = vechisttjet[i].Integral()
-        gpttotal = vechisgpt[i].Integral()
-        qcdtotal = vechisqcd[i].Integral()
-        sigtotal = vechissig1[i].Integral()
+    # for i in range(len(vechissig1)):
+    #     ttjettotal = vechisttjet[i].Integral()
+    #     gpttotal = vechisgpt[i].Integral()
+    #     qcdtotal = vechisqcd[i].Integral()
+    #     sigtotal = vechissig1[i].Integral()
 
-        if(ttjettotal != 0):
-            ratiottjet = 1./ttjettotal
-        else:
-            ratiottjet = 1.
+    #     if(ttjettotal != 0):
+    #         ratiottjet = 1./ttjettotal
+    #     else:
+    #         ratiottjet = 1.
 
-        if(gpttotal != 0):
-            ratiogpt = 1./gpttotal
-        else:
-            ratiogpt = 1.
+    #     if(gpttotal != 0):
+    #         ratiogpt = 1./gpttotal
+    #     else:
+    #         ratiogpt = 1.
 
-        if(qcdtotal != 0):
-            ratioqcd = 1./qcdtotal
-        else:
-            ratioqcd = 1.
+    #     if(qcdtotal != 0):
+    #         ratioqcd = 1./qcdtotal
+    #     else:
+    #         ratioqcd = 1.
 
-        if(sigtotal != 0):
-            ratiosig = 1./sigtotal
-        else:
-            ratiosig = 1.
+    #     if(sigtotal != 0):
+    #         ratiosig = 1./sigtotal
+    #     else:
+    #         ratiosig = 1.
             
-        vechisttjet[i].Scale(ratiottjet)
-        vechisqcd[i].Scale(ratiogpt)
-        vechisgpt[i].Scale(ratiogpt)
-        vechissig1[i].Scale(ratiosig)
+    #     vechisttjet[i].Scale(ratiottjet)
+    #     vechisqcd[i].Scale(ratiogpt)
+    #     vechisgpt[i].Scale(ratiogpt)
+    #     vechissig1[i].Scale(ratiosig)
+
+    # print vechisttjet[7].Integral()
     
     
     for it in vechisgpt:

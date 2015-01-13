@@ -3,7 +3,7 @@ from array import array
 from math import fabs, sqrt
 import CMS_lumi, tdrstyle
 
-#set the tdr style                                                                                                                                                                                                                             
+#set the tdr style 
 tdrstyle.setTDRStyle()
 
 
@@ -42,7 +42,7 @@ def loop(vec, photpt, phot):
 
 def function (lamb,ctau,phot):
 
-    listsig = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
     
     vecfilessig = []
     for item in listsig:
@@ -53,38 +53,30 @@ def function (lamb,ctau,phot):
     nPhotSig = [None]*14
     nConverSig = [None]*14
 
-    nPhotSig[0] = loop(vecfilessig, 50,phot)[0]
-    nPhotSig[1] = loop(vecfilessig, 60,phot)[0]
-    nPhotSig[2] = loop(vecfilessig, 70,phot)[0]
-    nPhotSig[3] = loop(vecfilessig, 80,phot)[0]
-    nPhotSig[4] = loop(vecfilessig, 90,phot)[0]
-    nPhotSig[5] = loop(vecfilessig, 100,phot)[0]
-    nPhotSig[6] = loop(vecfilessig, 110,phot)[0]
-    nPhotSig[7] = loop(vecfilessig, 120,phot)[0]
-    nPhotSig[8] = loop(vecfilessig, 130,phot)[0]
-    nPhotSig[9] = loop(vecfilessig, 140,phot)[0]
-    nPhotSig[10] = loop(vecfilessig, 150,phot)[0]
-    nPhotSig[11] = loop(vecfilessig, 160,phot)[0]
-    nPhotSig[12] = loop(vecfilessig, 170,phot)[0]
-    nPhotSig[13] = loop(vecfilessig, 180,phot)[0]
+    biglist = [None]*14
 
-    nConverSig[0] = loop(vecfilessig, 50,phot)[1]
-    nConverSig[1] = loop(vecfilessig, 60,phot)[1]
-    nConverSig[2] = loop(vecfilessig, 70,phot)[1]
-    nConverSig[3] = loop(vecfilessig, 80,phot)[1]
-    nConverSig[4] = loop(vecfilessig, 90,phot)[1]
-    nConverSig[5] = loop(vecfilessig, 100,phot)[1]
-    nConverSig[6] = loop(vecfilessig, 110,phot)[1]
-    nConverSig[7] = loop(vecfilessig, 120,phot)[1]
-    nConverSig[8] = loop(vecfilessig, 130,phot)[1]
-    nConverSig[9] = loop(vecfilessig, 140,phot)[1]
-    nConverSig[10] = loop(vecfilessig, 150,phot)[1]
-    nConverSig[11] = loop(vecfilessig, 160,phot)[1]
-    nConverSig[12] = loop(vecfilessig, 170,phot)[1]
-    nConverSig[13] = loop(vecfilessig, 180,phot)[1]
+    biglist[0] = loop(vecfilessig, 50,phot)
+    biglist[1] = loop(vecfilessig, 60,phot)
+    biglist[2] = loop(vecfilessig, 70,phot)
+    biglist[3] = loop(vecfilessig, 80,phot)
+    biglist[4] = loop(vecfilessig, 90,phot)
+    biglist[5] = loop(vecfilessig, 100,phot)
+    biglist[6] = loop(vecfilessig, 110,phot)
+    biglist[7] = loop(vecfilessig, 120,phot)
+    biglist[8] = loop(vecfilessig, 130,phot)
+    biglist[9] = loop(vecfilessig, 140,phot)
+    biglist[10] = loop(vecfilessig, 150,phot)
+    biglist[11] = loop(vecfilessig, 160,phot)
+    biglist[12] = loop(vecfilessig, 170,phot)
+    biglist[13] = loop(vecfilessig, 180,phot)
+
+    for i in range(len(biglist)):
+        nPhotSig[i] = biglist[i][0]
+        nConverSig[i] = biglist[i][1]
 
     Efficiencies = [None]*14
     EfficiencyHist = TH1D("Efficiencies","",14,40,180)
+    EfficiencyHist.Sumw2()
     EfficiencyHist.SetMarkerStyle(3)
     EfficiencyHist.SetMarkerSize(1.1)
     
@@ -102,18 +94,27 @@ def main():
     # CTAU50 = function("180","50",2)
     # CTAU250 = function("180","250",2)
     # CTAU500 = function("180","500",2)
+    # CTAU2000 = function("180","2000",2)
 
-    CTAU10 = function("160","10",2)
-    CTAU50 = function("160","50",2)
-    CTAU100 = function("160","100",2)
-    CTAU500 = function("160","500",2)
+    # CTAU10 = function("160","10",2)
+    # CTAU100 = function("160","100",2)
+    # CTAU1000 = function("160","1000",2)
+    # CTAU2000 = function("160","2000",2)
+    # CTAU500 = function("160","500",2)
+
+    CTAU10 = function("140","10",2)                                                                                                                                                                                                         
+    CTAU100 = function("140","100",2)                                                                                                                                                                                                       
+    CTAU1000 = function("140","1000",2)                                                                                                                                                                                                     
+    CTAU2000 = function("140","2000",2)                                                                                                                                                                                                     
+    CTAU500 = function("140","500",2) 
 
     CTAU10.SetMarkerColor(1)
-    CTAU50.SetMarkerColor(2)
+    #CTAU50.SetMarkerColor(2)
     #CTAU250.SetMarkerColor(3)
-    CTAU100.SetMarkerColor(5)
-    CTAU500.SetMarkerColor(4)
-
+    CTAU100.SetMarkerColor(4)
+    CTAU1000.SetMarkerColor(5)
+    CTAU500.SetMarkerColor(6)
+    CTAU2000.SetMarkerColor(7)
 
     leg = TLegend(0.55,0.70,0.94,0.89)
     leg.SetFillColor(kWhite)
@@ -125,14 +126,21 @@ def main():
     # leg.AddEntry(CTAU50, "GMSB(180 TeV, 5 cm)","p")
     # leg.AddEntry(CTAU250, "GMSB(180 TeV, 25 cm)","p")
     # leg.AddEntry(CTAU500, "GMSB(180 TeV, 50 cm)","p")
+    # leg.AddEntry(CTAU2000, "GMSB(180 TeV, 200 cm)","p")
 
-    leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
-    leg.AddEntry(CTAU50, "GMSB(160 GeV, 5 cm)","p")
-    leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
-    leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+    # leg.AddEntry(CTAU10, "GMSB(160 GeV, 1 cm)","p")
+    # leg.AddEntry(CTAU100, "GMSB(160 GeV, 10 cm)","p")
+    # leg.AddEntry(CTAU1000, "GMSB(160 GeV, 100 cm)","p")
+    # leg.AddEntry(CTAU500, "GMSB(160 GeV, 50 cm)","p")
+    # leg.AddEntry(CTAU2000, "GMSB(160 TeV, 200 cm)","p")
 
+    leg.AddEntry(CTAU10, "GMSB(140 GeV, 1 cm)","p")                                                                                                                                                                                         
+    leg.AddEntry(CTAU100, "GMSB(140 GeV, 10 cm)","p")                                                                                                                                                                                       
+    leg.AddEntry(CTAU1000, "GMSB(140 GeV, 100 cm)","p")                                                                                                                                                                                     
+    leg.AddEntry(CTAU500, "GMSB(140 GeV, 50 cm)","p")                                                                                                                                                                                       
+    leg.AddEntry(CTAU2000, "GMSB(140 TeV, 200 cm)","p")
 
-    CTAU10.GetYaxis().SetRangeUser(0,0.2)
+    CTAU10.GetYaxis().SetRangeUser(0.,0.2)
     CTAU10.GetYaxis().SetTitleSize(0.05)
     CTAU10.GetYaxis().SetTitleOffset(1.2)
     CTAU10.GetYaxis().SetTitle("Conversion Reconstruction Efficiency")
@@ -184,11 +192,13 @@ def main():
     canvas.SetTicky(0)
 
 
-    CTAU10.Draw("P")
-    CTAU50.Draw("Psame")
-    #CTAU250.Draw("Psame")
-    CTAU100.Draw("Psame")
-    CTAU500.Draw("Psame")
+    CTAU10.Draw("PE")
+    #CTAU50.Draw("PEsame")
+    #CTAU250.Draw("PEsame")
+    CTAU100.Draw("PEsame")
+    CTAU1000.Draw("PEsame")
+    CTAU2000.Draw("PEsame")
+    CTAU500.Draw("PEsame")
     leg.Draw("same")
 
 
@@ -202,7 +212,9 @@ def main():
     frame.Draw()
   
     #canvas.SaveAs("./dxyefficiencyL180.png")
-    canvas.SaveAs("./dxyefficiencyL160.png")
+    #canvas.SaveAs("./dxyefficiencyL160.png")
+    canvas.SaveAs("./dxyefficiencyL140.png")
+
 
 if __name__ == "__main__":
     main()

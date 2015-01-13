@@ -1,12 +1,12 @@
-Sender: LSF System <lsfadmin@b6673dd45a.cern.ch>
-Subject: Job 600605568: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/Run2012C_1 Run2012C_1> in cluster batch Done
+Sender: LSF System <lsfadmin@b6bf6f83f9.cern.ch>
+Subject: Job 610477732: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/Run2012C_1 Run2012C_1> in cluster batch Done
 
-Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/Run2012C_1 Run2012C_1> was submitted from host <lxplus0032.cern.ch> by user <wvandrie> in cluster <batch>.
-Job was executed on host(s) <b6673dd45a.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
+Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/Run2012C_1 Run2012C_1> was submitted from host <lxplus0135.cern.ch> by user <wvandrie> in cluster <batch>.
+Job was executed on host(s) <b6bf6f83f9.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
 </afs/cern.ch/user/w/wvandrie> was used as the home directory.
 </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
-Started at Wed Dec 10 13:28:48 2014
-Results reported at Wed Dec 10 14:15:07 2014
+Started at Mon Jan 12 17:18:06 2015
+Results reported at Mon Jan 12 17:51:23 2015
 
 Your job looked like:
 
@@ -20,9 +20,9 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time   :   2605.31 sec.
-    Max Memory :        67 MB
-    Max Swap   :       859 MB
+    CPU time   :   1849.46 sec.
+    Max Memory :        64 MB
+    Max Swap   :       858 MB
 
     Max Processes  :         8
     Max Threads    :         9
@@ -30,11 +30,11 @@ Resource usage summary:
 The output (if any) follows:
 
 @(#)CERN job starter $Date: 2010/06/23 14:22:16 $
-Working directory is </pool/lsf/wvandrie/600605568> on <>
+Working directory is </pool/lsf/wvandrie/610477732> on <>
 
 Reading list : list/Run2012C_1 .......
 Adding following files to the chain
-	/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v22/Run2012C_1.root
+	/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/Run2012C_1.root
 Number of files: 1
 Building DPSelection...
 Processing event 10000
@@ -321,12 +321,13 @@ Processing event 2810000
 Processing event 2820000
 Processing event 2830000
 Processing event 2840000
+Processing event 2850000
 
-Job finished at Wed Dec 10 14:14:17 CET 2014 on node 
+Job finished at Mon Jan 12 17:50:44 CET 2015 on node 
  under linux version Scientific Linux CERN SLC release 6.6 (Carbon)
 
-CERN statistics: This process used approximately : 1:15:47 KSI2K hours (4547 KSI2K seconds)
-                 This process corresponds to     : 4:55:34 HS06  hours (17734 HS06  seconds)
+CERN statistics: This process used approximately : 1:03:07 KSI2K hours (3787 KSI2K seconds)
+                 This process corresponds to     : 4:06:12 HS06  hours (14772 HS06  seconds)
 
 
 PS:

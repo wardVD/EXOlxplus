@@ -43,12 +43,12 @@ def loop(vec, dxy, flag, phot):
 
 def function (lamb,ctau,phot):
 
-    listttjets = ["./v21/TTJets.root"]
-    listsig = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
-    listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
-    listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
-    listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
-    listfakelow = ["./v21/Run2012Afakelow.root","./v21/Run2012Bfakelow.root","./v21/Run2012C_1fakelow.root","./v21/Run2012C_2fakelow.root","./v21/Run2012C_3fakelow.root","./v21/Run2012D_1fakelow.root","./v21/Run2012D_2fakelow.root","./v21/Run2012D_3fakelow.root"]
+    listttjets = ["./v24/TTJets.root"]
+    listsig = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau+".root"]
+    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
+    listdataisolow = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
+    listfakehigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
+    listfakelow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
     
     vecfilesttjets = []
     for item in listttjets:
@@ -151,18 +151,24 @@ def function (lamb,ctau,phot):
 
 
 def main():
-    function("160","10",1)
-    function("160","50",1)
-    function("160","100",1)
-    function("160","500",1)
-    #function("160","1000",1)
-    #function("160","2000",1)
+    function("140","10",2)
+    function("140","100",2)
+    function("140","500",2)
+    function("140","1000",2)
+    function("140","2000",2)
 
-    function("180","10",1)
-    function("180","50",1)
-    function("180","250",1)
-    function("180","500",1)
-    #function("180","2000",1)
+    function("160","10",2)
+    #function("160","50",2)
+    function("160","100",2)
+    function("160","500",2)
+    function("160","1000",2)
+    function("160","2000",2)
+
+    function("180","10",2)
+    function("180","50",2)
+    function("180","250",2)
+    function("180","500",2)
+    function("180","2000",2)
 
 if __name__ == "__main__":
     main()

@@ -80,6 +80,8 @@ double weightCrossSection(const char* outname) {
   double weight;
   
  
+  
+  if (string(outname).find("GMSB_L140") != std::string::npos) weight = 0.0574;
   if (string(outname).find("GMSB_L160") != std::string::npos) weight = 0.0277;
   if (string(outname).find("GMSB_L180") != std::string::npos) weight = 0.0145;
 
@@ -112,7 +114,7 @@ double weightCrossSection(const char* outname) {
 
 int getsumcounterzero(TString infile){
 
-  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v22/";
+  TString dir = "/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/";
   //TString dir = "/afs/cern.ch/work/s/sigamani/public/CMSSW_5_3_22_DP/src/EXO/DPAnalysis_Step2/"; 
   TFile f(dir+infile+".root");
 
@@ -200,6 +202,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("phiPhot", &phiPhot);
   anaTree->Branch("dxyConv", &dxyConv);
   anaTree->Branch("dzConv", &dzConv);
+  anaTree->Branch("conversionR", &conversionR);
   anaTree->Branch("etaConv", &etaConv);
   anaTree->Branch("phiConv", &phiConv);
   anaTree->Branch("deltaRward", &deltaRward);
@@ -219,7 +222,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("PUScaleFactors", &PUScaleFactors, "PUScaleFactors/F");
   anaTree->Branch("convMatched", &convMatched, "convMatched/F");
   anaTree->Branch("phoMatched", &phoMatched, "phoMatched/F");
-  anaTree->Branch("phoMatched2", &phoMatched2, "phoMatched2/F");
+  anaTree->Branch("conversionVeto", &conversionVeto, "conversionVeto/F");
   anaTree->Branch("phohovere", &phohovere);
   anaTree->Branch("chadiso", &chadiso);
   anaTree->Branch("nhadiso", &nhadiso);
@@ -290,6 +293,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     phiPhot.clear();
     dxyConv.clear();
     dzConv.clear();
+    conversionR.clear();
     phiConv.clear();
     etaConv.clear();
     deltaRward.clear();
@@ -353,6 +357,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
        
       dzConv.push_back(convDz[i]);
       dxyConv.push_back(convDxy[i]);
+      conversionR.push_back(convR[i]);
       phiConv.push_back(convPhi[i]);
       etaConv.push_back(convEta[i]);
       ConvChi2.push_back(convChi2[i]);
@@ -393,7 +398,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if ( phoHoverE[i] > 0.05 ) continue ;
       //if ( sMinPho[i] < 0.15 || sMinPho[i] > 0.3 )  continue ; WAS WEG
       //if ( sMinPho[i] < 0.12 || sMinPho[i] > 0.38 )                continue ; WAS WEG
-      if ( sigmaIeta[i] >  0.012 ) continue ;
+      if ( sigmaIeta[i] >  0.012 ) continue ; 
       //if ( dR_TrkPho[i] < 0.6 ) continue; WAS WEG
       if ( phoP4.Eta() > -0.75 && phoP4.Eta() < -0.6 && phoP4.Phi() > -1. && phoP4.Phi() < -0.8 ) photpt = false ;
       if ( phoP4up.Eta() > -0.75 && phoP4up.Eta() < -0.6 && phoP4up.Phi() > -1. && phoP4up.Phi() < -0.8 ) photptup = false ;
@@ -415,19 +420,20 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ) photpt = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4up.Pt() ) ) photptup = false ;  // photon
       if ( photIso[i] >= 1.3 + ( 0.005*phoP4down.Pt() ) ) photptdown = false ;  // photon
+      
 
       /***********************************************************************/
       //                   Cut for fake photons                                                                                                                                                          
       /***********************************************************************/
        
       /*
-       if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
+      if (!( cHadIso[i] >= 2.6 )  && (!( nHadIso[i] >= 3.5 + ( 0.04*phoP4.Pt()   ) )) && (!( photIso[i] >= 1.3 + ( 0.005*phoP4.Pt() ) ))  ) continue ;
       */
 
       if (phoMatchedEle[i] > 0) continue;
-      if (phoMatchedEle2[i] > 0) {
-	std::cout << "HIT" << std::endl;
-	continue;
+      if (conversionVeto[i] > 0){
+       	std::cout << "HIT" << std::endl;
+       	continue;
       }
 
       if ( photpt ) ptPhot.push_back(phoP4.Pt());
@@ -519,12 +525,12 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     METUP = met*1.01;
     METDOWN = met*0.99;
 
-    h000->Fill(1.);
-    if (nGoodVtx < 0) continue; h000->Fill(2.);
-    if (MET < 30) continue;         h000->Fill(3.);
-    if (nJet < 2) continue;          h000->Fill(4.);
-    if (nPhot < 2) continue;           h000->Fill(5.);
-
+    
+                                          h000->Fill(1.);
+    if (nGoodVtx < 0) continue;           h000->Fill(2.);
+    if (MET > 20) continue;               h000->Fill(3.);
+    if (nJet < 2) continue;               h000->Fill(4.);
+    if (nPhot < 2) continue;              h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
     vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);

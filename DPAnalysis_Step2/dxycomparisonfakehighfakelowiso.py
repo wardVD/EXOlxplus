@@ -41,17 +41,27 @@ def function():
         temp = TFile.Open(item)
         vecfilesiso.append(temp)
 
-    dxyhigh = TH1D("dXYhigh","",25,0,2.5)
-    dxylow = TH1D("dXYlow","",25,0,2.5)
-    dxyiso = TH1D("dXYiso","",25,0,2.5)
+    xbins = array('d',[0.,0.3, 1., 3., 6.])
+
+    dxyhigh = TH1D("dXYhigh","",4,xbins)
+    dxylow = TH1D("dXYlow","",4,xbins)
+    dxyiso = TH1D("dXYiso","",4,xbins)
+
+    # dxyhigh = TH1D("dXYhigh","",25,0,2.5)
+    # dxylow = TH1D("dXYlow","",25,0,2.5)
+    # dxyiso = TH1D("dXYiso","",25,0,2.5)
 
     dxyhigh = loop(vecfileshigh,dxyhigh,1)
     dxylow = loop(vecfileslow,dxylow,1)
     dxyiso = loop(vecfilesiso,dxyiso,1)
 
-    dxyhigh.SetBinContent(50,dxyhigh.GetBinContent(51))
-    dxylow.SetBinContent(50,dxylow.GetBinContent(51))
-    dxyiso.SetBinContent(50,dxyiso.GetBinContent(51))
+    dxyhigh.SetBinContent(4,(dxyhigh.GetBinContent(5)+dxyhigh.GetBinContent(5)))
+    dxylow.SetBinContent(4,(dxylow.GetBinContent(5)+dxylow.GetBinContent(5)))
+    dxyiso.SetBinContent(4,(dxyiso.GetBinContent(5)+dxyiso.GetBinContent(5)))
+
+    # dxyhigh.SetBinContent(50,dxyhigh.GetBinContent(51))
+    # dxylow.SetBinContent(50,dxylow.GetBinContent(51))
+    # dxyiso.SetBinContent(50,dxyiso.GetBinContent(51))
 
     """
     ratiolow = dxyhigh.Integral()/dxylow.Integral()

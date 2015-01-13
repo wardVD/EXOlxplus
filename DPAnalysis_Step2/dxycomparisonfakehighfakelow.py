@@ -99,6 +99,8 @@ def plot(dxy,cmslabel,sqrtlabel):
 
     dxy[1].GetXaxis().SetTitle("d_{XY}")
     dxy[1].GetYaxis().SetTitle("Events")
+    dxy[1].GetXaxis().SetTitleSize(0.05)
+    dxy[1].GetYaxis().SetTitleSize(0.05)
     
     dxy[1].Draw("PE")
     dxy[0].Draw("same")

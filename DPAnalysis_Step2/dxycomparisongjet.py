@@ -12,7 +12,7 @@ def loop(vec,vechisto,flag):
         entr = tree.GetEntries()
         print 'total events ' + str(entr)
         for event in tree:
-            if (event.nPhot < 1):
+            if (event.nPhot < 2):
                 continue
             if (event.nJet < 2):
                 continue
@@ -41,12 +41,13 @@ def function():
         vecfilesgjetlowmet.append(temp)
 
     #xbins = array('d',[0.,0.1,0.2,0.6,2.5])
-    xbins = array('d',[0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,2.5])
+    #xbins = array('d',[0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,2.5])
+    xbins = array('d',[0.,0.3, 1., 3., 6.])
 
-    #dxygjet = TH1D("dXYgjet","",9,xbins)
-    #dxygjetlowmet = TH1D("dXYgjetlowmet","",9,xbins)
-    dxygjet = TH1D("dXYgjet","",25,0,2.5)
-    dxygjetlowmet = TH1D("dXYgjetlowmet","",25,0,2.5)
+    dxygjet = TH1D("dXYgjet","",4,xbins)
+    dxygjetlowmet = TH1D("dXYgjetlowmet","",4,xbins)
+    #dxygjet = TH1D("dXYgjet","",25,0,2.5)
+    #dxygjetlowmet = TH1D("dXYgjetlowmet","",25,0,2.5)
     dxygjet.Sumw2()
     dxygjetlowmet.Sumw2()
 
@@ -93,9 +94,9 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
-    dxy[1].GetYaxis().SetRangeUser(1,10000)                                                                                                                                                                                                   
-    dxy[1].GetYaxis().SetTitleSize(0.05)
-    dxy[1].GetXaxis().SetTitleSize(0.05)
+    dxy[1].GetYaxis().SetRangeUser(1,15)
+    dxy[1].GetYaxis().SetTitleSize(0.06)
+    dxy[1].GetXaxis().SetTitleSize(0.06)
 
     leg = TLegend(0.55,0.75,0.89,0.89)
     leg.SetFillColor(kWhite)
