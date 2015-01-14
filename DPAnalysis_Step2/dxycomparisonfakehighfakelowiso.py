@@ -3,7 +3,7 @@ from array import array
 from math import fabs, sqrt
 import CMS_lumi, tdrstyle
 
-#set the tdr style                                                                                                                                                                                                                             
+#set the tdr style   
 tdrstyle.setTDRStyle()
 
 def loop(vec,vechisto,flag):
@@ -12,21 +12,42 @@ def loop(vec,vechisto,flag):
         entr = tree.GetEntries()
         print 'total events ' + str(entr)
         for event in tree:
+
+            dxytemp = []
+
+            for i in range(len(event.dxyConv)):
+                if (event.ConvChi2[i] > 0.01):
+                    dxytemp.append(fabs(event.dxyConv[i]))
+            dxytemp = sorted(dxytemp)
+
+            if (event.nPhot < 2):
+                continue
+            if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
+                continue
+            if (event.ptJet[0] < 35):
+                continue
+            if (event.sigmaIetaPhot[0] < 0.006 or event.sigmaIetaPhot[0] > 0.012):
+                continue
+            if (event.ptPhot[0] < 85):
+                continue
+            if (event.sMajPhot[0] > 1.35):
+                continue
+
             if(flag == 0):
-                lum = 19300.
-                if(event.dxyConv.size() > 0):
-                    vechisto.Fill(event.dxyConv[0],(event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
+                lum = 19280.
+                if(len(dxytemp) > 0):
+                    vechisto.Fill( dxytemp[-1], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
             else:
-                if(event.dxyConv.size() > 0):
-                    vechisto.Fill(event.dxyConv[0], 1./event.EfficiencyScaleFactors )
+                if(len(dxytemp) > 0):
+                    vechisto.Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors )
 
     return vechisto
 
 
 def function():
-    listhigh = ["./v21_2/Run2012Afakehigh.root","./v21_2/Run2012Bfakehigh.root","./v21_2/Run2012C_1fakehigh.root","./v21_2/Run2012C_2fakehigh.root","./v21_2/Run2012C_3fakehigh.root","./v21_2/Run2012D_1fakehigh.root","./v21_2/Run2012D_2fakehigh.root","./v21_2/Run2012D_3fakehigh.root"]
-    listlow = ["./v21_2/Run2012Afakelow.root","./v21_2/Run2012Bfakelow.root","./v21_2/Run2012C_1fakelow.root","./v21_2/Run2012C_2fakelow.root","./v21_2/Run2012C_3fakelow.root","./v21_2/Run2012D_1fakelow.root","./v21_2/Run2012D_2fakelow.root","./v21_2/Run2012D_3fakelow.root"]
-    listiso = ["./v21_2/Run2012Aisolow.root","./v21_2/Run2012Bisolow.root","./v21_2/Run2012C_1isolow.root","./v21_2/Run2012C_2isolow.root","./v21_2/Run2012C_3isolow.root","./v21_2/Run2012D_1isolow.root","./v21_2/Run2012D_2isolow.root","./v21_2/Run2012D_3isolow.root"]
+    listhigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
+    listlow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
+    listiso = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
 
     vecfileshigh = []
     for item in listhigh:
@@ -55,9 +76,9 @@ def function():
     dxylow = loop(vecfileslow,dxylow,1)
     dxyiso = loop(vecfilesiso,dxyiso,1)
 
-    dxyhigh.SetBinContent(4,(dxyhigh.GetBinContent(5)+dxyhigh.GetBinContent(5)))
-    dxylow.SetBinContent(4,(dxylow.GetBinContent(5)+dxylow.GetBinContent(5)))
-    dxyiso.SetBinContent(4,(dxyiso.GetBinContent(5)+dxyiso.GetBinContent(5)))
+    dxyhigh.SetBinContent(4,(dxyhigh.GetBinContent(5)))
+    dxylow.SetBinContent(4,(dxylow.GetBinContent(5)))
+    dxyiso.SetBinContent(4,(dxyiso.GetBinContent(5)))
 
     # dxyhigh.SetBinContent(50,dxyhigh.GetBinContent(51))
     # dxylow.SetBinContent(50,dxylow.GetBinContent(51))
@@ -97,7 +118,7 @@ def plot(dxy):
 
     dxy[1].GetXaxis().SetTitle("Conversion d_{XY} (cm)")
     dxy[1].GetYaxis().SetTitle("Events")
-    dxy[1].GetYaxis().SetRangeUser(1,10000)
+    dxy[1].GetYaxis().SetRangeUser(0.1,1000)
     dxy[1].GetYaxis().SetTitleSize(0.05)
     dxy[1].GetXaxis().SetTitleSize(0.05)
 

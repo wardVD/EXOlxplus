@@ -182,6 +182,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   Float_t MET;
   Float_t METUP;
   Float_t METDOWN;
+  Float_t phiMET;
   Float_t CrossSectionWeight;
   Float_t EfficiencyScaleFactors;
   Float_t PUScaleFactors;
@@ -217,6 +218,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("MET", &MET, "MET/F");
   anaTree->Branch("METUP", &METUP, "METUP/F");
   anaTree->Branch("METDOWN", &METDOWN, "METDOWN/F");
+  anaTree->Branch("phiMET", &phiMET, "phiMET/F");
   anaTree->Branch("CrossSectionWeight", &CrossSectionWeight, "CrossSectionWeight/F");
   anaTree->Branch("EfficiencyScaleFactors", &EfficiencyScaleFactors, "EfficiencyScaleFactors/F");
   anaTree->Branch("PUScaleFactors", &PUScaleFactors, "PUScaleFactors/F");
@@ -533,6 +535,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (nPhot < 2) continue;              h000->Fill(5.);
 
     TVector3 MET( metPx, metPy, 0);  
+
+    phiMET = MET.Phi();
+
     vector<TLorentzVector> HEMIS = CombineJets_R_no_seed(jets, photons[0], photons[1]);
 
     double MTR = CalcMTR(HEMIS[0], HEMIS[1], MET);

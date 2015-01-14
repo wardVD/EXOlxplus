@@ -28,8 +28,8 @@ def loop(vec, vechisto, flag, phot):
             # if (len(event.dxyConv) > 0):
             #     dxytemp.append(fabs(dxytemp2))
 
-            #if (event.Rsqrd < 0.06):
-            #    continue
+#            if (event.Rsqrd < 0.03):
+#                continue
             if (event.nPhot < phot):
                 continue
             if (event.sMinPhot[0] < 0.15 or event.sMinPhot[0] > 0.3):
@@ -105,6 +105,8 @@ def loop(vec, vechisto, flag, phot):
                     
                 if(len(dxytemp) > 0):
                     vechisto[4].Fill( dxytemp[-1], 1./event.EfficiencyScaleFactors)
+                    if (dxytemp[-1] > 6):
+                        print dxytemp[-1]
 
                 vechisto[5].Fill( event.MET, 1./event.EfficiencyScaleFactors )
                 vechisto[6].Fill( event.nJet, 1./event.EfficiencyScaleFactors )
@@ -120,9 +122,6 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
         
-            if (len(dxytemp) > 0 and dxytemp[-1] > 3.0):
-                print dxytemp[-1]
-                
     return vechisto
 
 def function (lamb,ctau1,ctau2,phot):
@@ -131,7 +130,7 @@ def function (lamb,ctau1,ctau2,phot):
     listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
     listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
     listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
-    listdataisolow = ["./v24/Run2012Aisolow.root","./v24/Run2012Bisolow.root","./v24/Run2012C_1isolow.root","./v24/Run2012C_2isolow.root","./v24/Run2012C_3isolow.root","./v24/Run2012D_1isolow.root","./v24/Run2012D_2isolow.root","./v24/Run2012D_3isolow.root"]
+    listdataisolow = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
     listfakehigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
     listfakelow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
 
