@@ -215,6 +215,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
   anaTree->Branch("ptJet", &ptJet);
   anaTree->Branch("ptJetUp", &ptJetUp);
   anaTree->Branch("ptJetDown", &ptJetDown);
+  anaTree->Branch("phiJet", &phiJet);
   anaTree->Branch("MET", &MET, "MET/F");
   anaTree->Branch("METUP", &METUP, "METUP/F");
   anaTree->Branch("METDOWN", &METDOWN, "METDOWN/F");
@@ -264,7 +265,9 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     if (string(outname).find("Run2012") != std::string::npos)  { MC=0;} 
     else MC = 1;
     
-    if (!(triggered == 1 || triggered == 3)) continue;
+    if (MC == 0 && !(triggered == 1 || triggered == 3)) continue;
+
+    if (MC == 1 && triggered != 1) continue;
 
     int entries = getsumcounterzero(outname); 
 
@@ -293,6 +296,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
     ptJetDown.clear();
     etaPhot.clear();
     phiPhot.clear();
+    phiJet.clear();
     dxyConv.clear();
     dzConv.clear();
     conversionR.clear();
@@ -433,10 +437,7 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       */
 
       if (phoMatchedEle[i] > 0) continue;
-      if (conversionVeto[i] > 0){
-       	std::cout << "HIT" << std::endl;
-       	continue;
-      }
+      //if (conversionVeto[i] > 0) continue;
 
       if ( photpt ) ptPhot.push_back(phoP4.Pt());
       if ( photptup ) ptPhotUp.push_back(phoP4up.Pt());
@@ -444,8 +445,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       sort(ptPhot.begin(),ptPhot.end(),comp_pair);
       sort(ptPhotUp.begin(),ptPhotUp.end(),comp_pair);
       sort(ptPhotDown.begin(),ptPhotDown.end(),comp_pair);
-      etaPhot.push_back(fabs(phoP4.Eta()));
-      phiPhot.push_back(fabs(phoP4.Phi()));
+      etaPhot.push_back(phoP4.Eta());
+      phiPhot.push_back(phoP4.Phi());
       sMinPhot.push_back(sMinPho[i]);
       sMajPhot.push_back(sMajPho[i]);
       sigmaIetaPhot.push_back(sigmaIeta[i]);
@@ -511,6 +512,8 @@ void DPSelection::Loop(int nMaxEvents, const char* outname)
       sort(ptJet.begin(),ptJet.end(),comp_pair);
       sort(ptJetUp.begin(), ptJetUp.end(),comp_pair);
       sort(ptJetDown.begin(), ptJetDown.end(), comp_pair);
+
+      phiJet.push_back(jp4.Phi());
 
       jets.push_back(jp4);
 
