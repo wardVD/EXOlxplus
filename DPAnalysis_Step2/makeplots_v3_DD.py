@@ -42,6 +42,31 @@ def loop(vec, vechisto, flag, phot):
                 continue
             if (event.sMajPhot[0] > 1.35):
                 continue
+
+            jetdphi = [None]*2
+            photdphi = [None]*2
+
+            jetdphi[0] = abs(event.phiMET - event.phiJet[0])
+            if (jetdphi[0] > 3.1415):
+                jetdphi[0] = 6.283 - jetdphi[0]
+
+            jetdphi[1] = abs(event.phiMET - event.phiJet[1])
+            if (jetdphi[1] > 3.1415):
+                jetdphi[1] = 6.283 - jetdphi[1]
+
+            photdphi[0] = abs(event.phiMET - event.phiPhot[0])
+            if (photdphi[0] > 3.1415):
+                photdphi[0] = 6.283 - photdphi[0]
+
+            photdphi[1] = abs(event.phiMET - event.phiPhot[1])
+            if (photdphi[1] > 3.1415):
+                photdphi[1] = 6.283 - photdphi[1]
+
+            jetdphi = sorted(jetdphi)
+            photdphi = sorted(photdphi)
+
+            #print jetdphi, photdphi
+
             if(flag == 0):
                 lum = 19280.
                 vechisto[0].Fill( event.ptPhot[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors) )
@@ -66,7 +91,7 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
-                #vechisto[17].Fill( event.Rsqrd, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
+                vechisto[17].Fill( event.Rsqrd, (event.CrossSectionWeight*lum)/(event.EfficiencyScaleFactors))
                 
             if (flag == 1):
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
@@ -92,7 +117,7 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
-                #vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
+                vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
                     
             if (flag == 2):
                 vechisto[0].Fill( event.ptPhot[0], 1./event.EfficiencyScaleFactors )
@@ -120,19 +145,19 @@ def loop(vec, vechisto, flag, phot):
                 vechisto[14].Fill( event.nhadiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[15].Fill( event.photiso[0], 1./(event.EfficiencyScaleFactors))
                 vechisto[16].Fill( event.phohovere[0], 1./(event.EfficiencyScaleFactors))
-                #vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
+                vechisto[17].Fill( event.Rsqrd, 1./(event.EfficiencyScaleFactors))
         
     return vechisto
 
 def function (lamb,ctau1,ctau2,phot):
 
-    listttjets = ["./v21/TTJets.root"]
-    listsig1 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
-    listsig2 = ["./v21/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
-    listdata = ["./v21/Run2012A.root","./v21/Run2012B.root","./v21/Run2012C_1.root","./v21/Run2012C_2.root","./v21/Run2012C_3.root","./v21/Run2012D_1.root","./v21/Run2012D_2.root","./v21/Run2012D_3.root"]
-    listdataisolow = ["./v21/Run2012Aisolow.root","./v21/Run2012Bisolow.root","./v21/Run2012C_1isolow.root","./v21/Run2012C_2isolow.root","./v21/Run2012C_3isolow.root","./v21/Run2012D_1isolow.root","./v21/Run2012D_2isolow.root","./v21/Run2012D_3isolow.root"]
-    #listfakehigh = ["./v21/Run2012Afakehigh.root","./v21/Run2012Bfakehigh.root","./v21/Run2012C_1fakehigh.root","./v21/Run2012C_2fakehigh.root","./v21/Run2012C_3fakehigh.root","./v21/Run2012D_1fakehigh.root","./v21/Run2012D_2fakehigh.root","./v21/Run2012D_3fakehigh.root"]
-    #listfakelow = ["./v21/Run2012Afakelow.root","./v21/Run2012Bfakelow.root","./v21/Run2012C_1fakelow.root","./v21/Run2012C_2fakelow.root","./v21/Run2012C_3fakelow.root","./v21/Run2012D_1fakelow.root","./v21/Run2012D_2fakelow.root","./v21/Run2012D_3fakelow.root"]
+    listttjets = ["./v24/TTJets.root"]
+    listsig1 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau1+".root"]
+    listsig2 = ["./v24/GMSB_L"+lamb+"-CTAU"+ctau2+".root"]
+    listdata = ["./v24/Run2012A.root","./v24/Run2012B.root","./v24/Run2012C_1.root","./v24/Run2012C_2.root","./v24/Run2012C_3.root","./v24/Run2012D_1.root","./v24/Run2012D_2.root","./v24/Run2012D_3.root"]
+    listdataisolow = ["./v24/Run2012Aisolow20.root","./v24/Run2012Bisolow20.root","./v24/Run2012C_1isolow20.root","./v24/Run2012C_2isolow20.root","./v24/Run2012C_3isolow20.root","./v24/Run2012D_1isolow20.root","./v24/Run2012D_2isolow20.root","./v24/Run2012D_3isolow20.root"]
+    #listfakehigh = ["./v24/Run2012Afakehigh.root","./v24/Run2012Bfakehigh.root","./v24/Run2012C_1fakehigh.root","./v24/Run2012C_2fakehigh.root","./v24/Run2012C_3fakehigh.root","./v24/Run2012D_1fakehigh.root","./v24/Run2012D_2fakehigh.root","./v24/Run2012D_3fakehigh.root"]
+    #listfakelow = ["./v24/Run2012Afakelow.root","./v24/Run2012Bfakelow.root","./v24/Run2012C_1fakelow.root","./v24/Run2012C_2fakelow.root","./v24/Run2012C_3fakelow.root","./v24/Run2012D_1fakelow.root","./v24/Run2012D_2fakelow.root","./v24/Run2012D_3fakelow.root"]
 
     vecfilesttjets = []
     for item in listttjets:

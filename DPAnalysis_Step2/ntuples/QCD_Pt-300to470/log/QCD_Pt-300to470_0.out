@@ -1,120 +1,12 @@
-Sender: LSF System <lsfadmin@b62ee43192.cern.ch>
-Subject: Job 611315253: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> in cluster batch Exited
+Sender: LSF System <lsfadmin@b6944e43f9.cern.ch>
+Subject: Job 611562104: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> in cluster batch Done
 
-Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> was submitted from host <lxplus0027.cern.ch> by user <wvandrie> in cluster <batch>.
-Job was executed on host(s) <b62ee43192.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
+Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> was submitted from host <lxplus0021.cern.ch> by user <wvandrie> in cluster <batch>.
+Job was executed on host(s) <b6944e43f9.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
 </afs/cern.ch/user/w/wvandrie> was used as the home directory.
 </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
-Started at Wed Jan 14 17:49:13 2015
-Results reported at Wed Jan 14 18:10:51 2015
-
-Your job looked like:
-
-------------------------------------------------------------
-# LSBATCH: User input
-cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` 
-./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470;
-------------------------------------------------------------
-
-Exited with exit code 255.
-
-Resource usage summary:
-
-    CPU time   :     11.18 sec.
-    Max Memory :        17 MB
-    Max Swap   :       960 MB
-
-    Max Processes  :        10
-    Max Threads    :        11
-
-The output (if any) follows:
-
-@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
-Working directory is </pool/lsf/wvandrie/611315253> on <>
-
-Reading list : list/QCD_Pt-300to470 .......
-Adding following files to the chain
-	/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/QCD_Pt-300to470.root
-Number of files: 1
-Building DPSelection...
-Processing event 10000
-Processing event 20000
-Processing event 30000
-
-Job finished at Wed Jan 14 18:10:13 CET 2015 on node 
- under linux version Scientific Linux CERN SLC release 6.6 (Carbon)
-
-CERN statistics: This process used approximately : 0:00:18 KSI2K hours (18 KSI2K seconds)
-                 This process corresponds to     : 0:01:11 HS06  hours (71 HS06  seconds)
-
-
-PS:
-
-Read file </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2/ntuples/QCD_Pt-300to470/log/QCD_Pt-300to470_0.stderr> for stderr output of this job.
-
-Sender: LSF System <lsfadmin@b61113e1ff.cern.ch>
-Subject: Job 611396368: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> in cluster batch Exited
-
-Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> was submitted from host <lxplus0190.cern.ch> by user <wvandrie> in cluster <batch>.
-Job was executed on host(s) <b61113e1ff.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
-</afs/cern.ch/user/w/wvandrie> was used as the home directory.
-</afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
-Started at Wed Jan 14 20:05:45 2015
-Results reported at Wed Jan 14 20:06:54 2015
-
-Your job looked like:
-
-------------------------------------------------------------
-# LSBATCH: User input
-cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` 
-./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470;
-------------------------------------------------------------
-
-Exited with exit code 255.
-
-Resource usage summary:
-
-    CPU time   :      8.61 sec.
-    Max Memory :        14 MB
-    Max Swap   :       514 MB
-
-    Max Processes  :         6
-    Max Threads    :         7
-
-The output (if any) follows:
-
-@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
-Working directory is </pool/lsf/wvandrie/611396368> on <>
-
-Reading list : list/QCD_Pt-300to470 .......
-Adding following files to the chain
-	/afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis/test/v24/QCD_Pt-300to470.root
-Number of files: 1
-Building DPSelection...
-Processing event 10000
-Processing event 20000
-Processing event 30000
-
-Job finished at Wed Jan 14 20:06:51 CET 2015 on node 
- under linux version Scientific Linux CERN SLC release 6.6 (Carbon)
-
-CERN statistics: This process used approximately : 0:00:15 KSI2K hours (15 KSI2K seconds)
-                 This process corresponds to     : 0:01:01 HS06  hours (61 HS06  seconds)
-
-
-PS:
-
-Read file </afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2/ntuples/QCD_Pt-300to470/log/QCD_Pt-300to470_0.stderr> for stderr output of this job.
-
-Sender: LSF System <lsfadmin@b6a10a9e16.cern.ch>
-Subject: Job 611397573: <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> in cluster batch Done
-
-Job <cd /afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2;eval `scramv1 runtime -sh` ;./tmp/main list/QCD_Pt-300to470 QCD_Pt-300to470> was submitted from host <lxplus0190.cern.ch> by user <wvandrie> in cluster <batch>.
-Job was executed on host(s) <b6a10a9e16.cern.ch>, in queue <8nh>, as user <wvandrie> in cluster <batch>.
-</afs/cern.ch/user/w/wvandrie> was used as the home directory.
-</afs/cern.ch/work/w/wvandrie/public/EXO/CMSSW_7_1_8/src/EXO/DPAnalysis_Step2> was used as the working directory.
-Started at Wed Jan 14 20:16:06 2015
-Results reported at Wed Jan 14 20:19:29 2015
+Started at Thu Jan 15 13:02:55 2015
+Results reported at Thu Jan 15 13:05:22 2015
 
 Your job looked like:
 
@@ -128,9 +20,9 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time   :     45.61 sec.
-    Max Memory :       113 MB
-    Max Swap   :       697 MB
+    CPU time   :     54.65 sec.
+    Max Memory :       112 MB
+    Max Swap   :       696 MB
 
     Max Processes  :         6
     Max Threads    :         7
@@ -138,7 +30,7 @@ Resource usage summary:
 The output (if any) follows:
 
 @(#)CERN job starter $Date: 2010/06/23 14:22:16 $
-Working directory is </pool/lsf/wvandrie/611397573> on <>
+Working directory is </pool/lsf/wvandrie/611562104> on <>
 
 Reading list : list/QCD_Pt-300to470 .......
 Adding following files to the chain
@@ -268,11 +160,11 @@ Processing event 1200000
 Processing event 1210000
 Processing event 1220000
 
-Job finished at Wed Jan 14 20:17:33 CET 2015 on node 
+Job finished at Thu Jan 15 13:05:19 CET 2015 on node 
  under linux version Scientific Linux CERN SLC release 6.6 (Carbon)
 
-CERN statistics: This process used approximately : 0:01:18 KSI2K hours (78 KSI2K seconds)
-                 This process corresponds to     : 0:05:06 HS06  hours (306 HS06  seconds)
+CERN statistics: This process used approximately : 0:01:50 KSI2K hours (110 KSI2K seconds)
+                 This process corresponds to     : 0:07:09 HS06  hours (429 HS06  seconds)
 
 
 PS:
